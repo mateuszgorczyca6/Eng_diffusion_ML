@@ -10,7 +10,7 @@ from numpy import arange, array, zeros
 from time import time
 
 
-def read_data(model, SNR):
+def read_data(model, SNR, n = 0):
   models = ['attm', 'ctrw', 'fbm', 'lw', 'sbm']
   fname = f'data/{models[model]}_noisy_{SNR}.txt'
   traj = []
@@ -19,7 +19,10 @@ def read_data(model, SNR):
     lines = f.readlines()
   print(' --- ZAKOŃCZONO')
   print('Zapisywanie wartości:')
-  num_lines = len(lines)
+  if n == 0:
+    num_lines = len(lines)
+  else:
+    num_lines = n
   for l_n in range(num_lines):
     line = lines[l_n]
     traj.append([eval(line.strip())])
@@ -66,7 +69,7 @@ def TAMSD4(s, T):
         tamsds[n] = suma / (T - n)
     return tamsds
 
-def antigaussinity(tamsds, tamsds4):
+def antigaussinity(tamsds, tamsds4, T):
     Gs = [0] * (T - 1)
     for delt in range(1, T):
         Gs[delt - 1] = tamsds4[delt] / (2 * tamsds[delt])
@@ -116,16 +119,16 @@ def get_info(T, s_n, model, SNR, traj_num, traj):
     ss = slowdown(s_n, s)                             # współczynnik spowolnienia
     kappas = msd_ratio(tamsds, T)                     # współczynniki MSD dla różnych n
     tamsds4 = TAMSD4(s, T)                            # czasowe średnie odchylenie ^4
-    G = antigaussinity(tamsds, tamsds4)               # anty-gaussyjność
+    G = antigaussinity(tamsds, tamsds4, T)            # anty-gaussyjność
     S = straightness(s, length)                       # liniowość
     R = autocorr(s, T)                                # autokorelacja
     max_dist = max_distance(x, y, T + 1)              # maksymalny dystans między punktami
-    T = trappedness(D, T + 1, max_dist)               # współczynnik uwięzienia
+    Trap = trappedness(D, T + 1, max_dist)            # współczynnik uwięzienia
     frac_dim = fractal_dimension(T + 1, max_dist, length) # wymiar fraktalny
     l_t += 1
     if l_t%500==0:
         print(f'odczyt - {MODELS[model]} - {SNR} - {l_t}/{traj_num / 3}')
-    return ex, D, E, ss, kappas, G, S, R, max_dist, T, frac_dim
+    return ex, D, E, ss, kappas, G, S, R, max_dist, Trap, frac_dim
 
 def get_features(model, SNR):
     global l_t
@@ -169,6 +172,27 @@ def get_features(model, SNR):
     print(' --- ZAKOŃCZONO')
     return traj_info
     
+def repair_fractal_dim():
+    T = T_long
+    #for model in [1,2]:
+    for model in [1]:
+        print(MODELS[model])
+        for SNR in SNRs:
+            trajs = read_data(model, SNR)
+            table = pd.read_csv(f'data/{MODELS[model]}_noisy_{SNR}_features.csv')
+            for i in range(len(trajs)):
+                if i%500 == 0:
+                    print(f'{i}/{len(trajs)}')
+                x = trajs[i][0][1]
+                y = trajs[i][0][2]
+                s_x, s_y = movement_to_steps(x, y, T+1)
+                s = norm(s_x, s_y, T)
+                length = sum(s)
+                max_dist = table['max_distance'][i]
+                frac_dim = fractal_dimension(T + 1, max_dist, length)
+                table.at[i, 'fractal_dim'] = frac_dim
+            table.to_csv(f'data/{MODELS[model]}_noisy_{SNR}_features.csv')
+
 if __name__ == '__main__':
     T = T_long
     #for model in [1,2]:
@@ -176,3 +200,4 @@ if __name__ == '__main__':
         print(MODELS[model])
         for SNR in SNRs:
             get_features(model, SNR)
+    # repair_fractal_dim()
