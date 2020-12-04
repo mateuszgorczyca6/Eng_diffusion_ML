@@ -1,72 +1,62 @@
 import andi
-from global_params import *
+from plotting import plot_traj
+from os import path,mkdir
+import pandas as pd
+
 AD = andi.andi_datasets()
 
-def generate_trajectories(N, models, T, expo):
-  '''Models:
-  'attm', 'ctrw', 'fbm', 'lw', 'sbm'''
-  trajectories = AD.create_dataset(T = T,
-                                   N = N,
-                                   exponents = expo,
-                                   models = models,
-                                   dimension=2,
-                                   save_trajectories = True,
-                                   path = 'data/')
+def dirmake(ptch):
+    a=ptch.split('/')
+    pach=a[0]
+    if not path.exists(pach):mkdir(pach)
+    for i in a[1:]:
+        pach+='/'+i
+        if not path.exists(pach):mkdir(pach)
 
-def noise_trajectories(N, models, T, expo, SNR):
-  '''Dodaje szum gaussa do trajektorii.
-  Zwrac: trajektoria bez szumu, trajektoria z szumem'''
-  trajectories = AD.create_dataset(T = T,
-                                   N = N,
-                                   exponents = expo,
-                                   models = models,
-                                   dimension=2,
-                                   load_trajectories = True,
-                                   path = 'data/')
-  noisy_trajectories = AD.create_noisy_localization_dataset(dataset = trajectories.copy(),
-                                                            T = T,
-                                                            N = N,
-                                                            exponents = expo,
-                                                            models = models,
-                                                            dimension=2,
-                                                            mu=0,
-                                                            sigma=1/SNR)
-  return trajectories, noisy_trajectories
+def generate_trajectories(N, T, part):
+  if part == 1:
+    path = 'data/part1/generated/'
+    dirmake(path)
+    AD.andi_dataset(N = N, tasks = 1, dimensions = 2, save_dataset = True, min_T=T-1, max_T=T, path_datasets=path)
 
-def noisy_save(N, model, T, expo, SNR = -1):
-  models = ['attm', 'ctrw', 'fbm', 'lw', 'sbm']
-  data = ""
-  l_e = 0
-  for ex in expo:
-    if SNR == -1:
-      trajs, _ = noise_trajectories(N, model, T, ex, 1)
-    else:
-      _, trajs = noise_trajectories(N, model, T, ex, SNR)
-    l_t = 0
+def read_trajectories(part):
+  print('Ładowanie trajektorii')
+  if part == 1:
+    path = 'data/part1/generated/'
+    dirmake(path)
+    trajectories = []
+    with open(path+'task1.txt') as f:
+      n = 0
+      trajs = f.readlines()
+    l_t = len(trajs)
     for traj in trajs:
-      x = [0, *traj[2:T+2]]
-      y = [0, *traj[T+2:]]
-      data += str(ex) + ", " + str(x) + ", " + str(y) + "\n"
-      l_t += 1
-    l_e += 1
-    print(f"{models[model]} - {SNR} - {l_e}/{len(expo)}")
-  with open(f"data/{models[model]}_noisy_{SNR}.txt", "w") as f:
-    f.write(data)
+      traj = traj.strip()
+      traj = traj.split(';')[1:]
+      T = int(len(traj) / 2)
+      sx, sy = traj[:T], traj[T:]
+      x, y = [], []
+      for i in range(len(sx)):
+        x.append(float(sx[i]))
+        y.append(float(sy[i]))
+      trajectories.append([x, y])
+      n += 1
+      if n%500 == 0:
+        print(f'czytanie trajektorii - {n}/{l_t}')
+    print(' --- ZAKOŃCZONO')
+  return trajectories
 
-if __name__ == "__main__":
-  ## Generowanie trajektorii długich (T=100)
-  T=T_long
-  # CTRW a \in {0.1, 0,2, ..., 1}
-  model = 1 # CTRW
-  generate_trajectories(N, model, T, expo_CTRW)
-  # FBM a \in {0.25, 0.4, ..., 1.6}
-  model = 2 # FBM
-  generate_trajectories(N, model, T, expo_FBM)
-  print("Zaszumianie i zapisywanie trajektorii CTRW.")
-  for SNR in [-1, 1, 3, 10, 100]:
-    print(f"SNR = {SNR}")
-    noisy_save(N, 1, T, expo_CTRW, SNR)
-  print("Zaszumianie i zapisywanie trajektorii FBM.")
-  for SNR in [-1, 1, 3, 10, 100]:
-    print(f"SNR = {SNR}")
-    noisy_save(N, 2, T, expo_FBM, SNR)
+def read_real_expo(part):
+  if part == 1:
+    path = 'data/part1/generated/'
+    exps = []
+    with open(path + str('ref1.txt')) as f:
+      for traj in f.readlines():
+        traj = traj.strip()
+        traj = float(traj.split(';')[1])
+        exps.append(traj)
+  return exps
+
+def read_TAMSD(part):
+  if part == 1:
+    traj_info = pd.read_csv('data/part1/TAMSD/estimated.csv')
+  return traj_info

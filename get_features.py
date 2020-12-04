@@ -1,21 +1,12 @@
 import numba
 import multiprocessing as mp
 from functools import partial
-from global_params import SNRs, MODELS, T_long
+from global_params import MODELS, T_long
 import pandas as pd
 from numpy import linalg as LA
 from numpy import log, exp, mean, var
 from numpy import arange, array, zeros
 from time import time
-
-def TAMSD(s, T):
-  tamsds = [0] * T
-  for n in range(1, T): # gaps
-    suma = 0
-    for i in range(T - n):
-      suma += (s[i+n] - s[i]) ** 2
-    tamsds[n] = suma / (T - n)
-  return tamsds
 
 def read_traj(model, SNR, n = 0):
   models = ['attm', 'ctrw', 'fbm', 'lw', 'sbm']

@@ -1,63 +1,80 @@
-from get_features import TAMSD, read_traj, movement_to_steps, norm, diffusivity
-from global_params import T_long, MODELS, SNRs
+from get_features import read_traj, norm, diffusivity
+from generating_data import read_real_expo, dirmake
 from numpy import log
 import pandas as pd
 from matplotlib import pyplot as plt
+import multiprocessing as mp
+from functools import partial
 
-def estimate_expo(t, tamsds, D, T, printing = False):
+def TAMSD(s, T):
+  tamsds = [0] * T
+  for n in range(1, T): # gaps
+    suma = 0
+    for i in range(T - n):
+      suma += (s[i+n] - s[i]) ** 2
+    tamsds[n] = suma / (T - n)
+  return tamsds
+
+def estimate_expo(t, tamsds, D, T):
   log_t_2 = [log(i) ** 2 for i in t]
+  log_t = [log(i) for i in t]
   s_log_t_2 = sum(log_t_2)
-  log_rho_2 = [log( tamsds[i]/(4 * D) ) ** 2 for i in range(1, T)]
-  s_log_t_2_x_log_rho_2 = 0
+  s_log_t = sum(log_t)
+  log_rho = [log(tamsds[i]) for i in range(1, T)]
+  s_log_t_x_log_rho = 0
   for i in range(T - 1):
-    s_log_t_2_x_log_rho_2 += log_t_2[i] * log_rho_2[i]
-  if printing:
-    print(log_t_2)
-    print(log_rho_2)
-  return s_log_t_2 / s_log_t_2_x_log_rho_2
+    s_log_t_x_log_rho += log_t[i] * log_rho[i]
   
+  return (s_log_t_x_log_rho - log(4 * D) * s_log_t) / s_log_t_2
 
-if __name__ == '__main__':
-  T = T_long
-  for model in [1,2]:
-    print(MODELS[model])
-    for SNR in SNRs:
-      trajs = read_traj(model, SNR, 500)
-      traj_num = len(trajs)
-      print(f'Estymowanie wartości dla modelu {MODELS[model]} i SNR = {SNR}')
-      l_t = 0
-      traj_info = pd.DataFrame(columns=['D',
-                                        'expo',
-                                        'expo_est'],
+def TAMSD_estimation_traj(part, traj_num, give):
+  global liczydlo
+  if part == 1:
+    exps, traj = give
+    x, y = traj
+    T = len(x) - 1
+    real_exp = exps
+    r = norm(x, y, T)
+    tamsds = TAMSD(r, T)
+    D = diffusivity(tamsds[1])
+    t = range(1, T + 1)
+    est_exp = estimate_expo(t, tamsds, D, T)
+    result = D, real_exp, est_exp, tamsds
+    liczydlo += 1
+    if liczydlo%500 == 0:
+      print(f'TAMSDS - estymacja - {liczydlo}/{traj_num/3} --- estimate -> {est_exp}/{real_exp} <- real')
+    return result
+
+def TAMSD_estimation(trajectories, part):
+  global liczydlo
+  if part == 1:
+    exps = read_real_expo(part)
+    print('Obliczanie estymacji TAMSDS...')
+    liczydlo = 0
+    traj_num = len(trajectories)
+    traj_info = pd.DataFrame(columns = ['D', 'expo', 'expo_est', 'tamsds'],
                             index = range(traj_num))
-      for traj in trajs:
-        traj = traj[0]
-        expo = traj[0]
-        x = traj[1]
-        y = traj[2]
-        s_x, s_y = movement_to_steps(x, y, T + 1)
-        s = norm(s_x, s_y, T)
-        tamsds = TAMSD(s, T)
-        D = diffusivity(tamsds[1])
-        t = range(1, T + 1)
-        printing = False
-        if l_t == 100:
-          printing = True
-        expo_est = estimate_expo(t, tamsds, D, T, printing)
-        traj_info.loc[l_t] = [D, expo, expo_est]
-        if l_t == 100:
-          print(D)
-          print(expo)
-          print(expo_est)
-          plt.plot(x, y)
-          plt.show()
-          plt.plot([0, *t], [4 * D * i ** expo_est for i in [0, *t]], 'b')
-          plt.plot([0, *t], [4 * D * i ** expo for i in [0, *t]], 'r')
-          plt.show()
-        l_t += 1
-        if l_t%5000 == 0:
-          print(f'estymacja - {MODELS[model]} - {SNR} - {l_t}/{traj_num}')
-      print(' --- ZAKOŃCZONO')
-      fname = f'data/TAMSD/{MODELS[model]}_{SNR}_TAMSD_estimated.csv'
-      print(f'Zapis do pliku {fname}')
-      traj_info.to_csv(fname)
+    # 2 argumenty iterwane do poola
+    give = []
+    for i in range(traj_num):
+      give.append([exps[i], trajectories[i]])
+    with mp.Pool(3) as pool:
+      temp = partial(TAMSD_estimation_traj, part, traj_num)
+      result = pool.map(temp, give)
+      pool.close()
+      pool.join()
+    print(' --- ZAKOŃCZONO')
+    print('Translacja wyników TAMSD...')
+    liczydlo = 0
+    for i in result:
+      traj_info.loc[liczydlo] = i
+      liczydlo += 1
+      if liczydlo%500 == 0:
+        print(f'TAMSD - translacja - {liczydlo}/{traj_num}')
+    print(' --- ZAKOŃCZONO')
+    path = 'data/part1/TAMSD/'
+    dirmake(path)
+    fname = path + str('estimated.csv')
+    print(f'Zapisywanie trajektorii do pliku {fname}')
+    traj_info.to_csv(fname)
+    print(' --- ZAKOŃCZONO')
