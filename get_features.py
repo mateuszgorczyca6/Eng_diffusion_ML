@@ -1,7 +1,6 @@
 import numba
 import multiprocessing as mp
 from functools import partial
-from TAMSD import TAMSD
 from global_params import SNRs, MODELS, T_long
 import pandas as pd
 from numpy import linalg as LA
@@ -9,8 +8,16 @@ from numpy import log, exp, mean, var
 from numpy import arange, array, zeros
 from time import time
 
+def TAMSD(s, T):
+  tamsds = [0] * T
+  for n in range(1, T): # gaps
+    suma = 0
+    for i in range(T - n):
+      suma += (s[i+n] - s[i]) ** 2
+    tamsds[n] = suma / (T - n)
+  return tamsds
 
-def read_data(model, SNR, n = 0):
+def read_traj(model, SNR, n = 0):
   models = ['attm', 'ctrw', 'fbm', 'lw', 'sbm']
   fname = f'data/{models[model]}_noisy_{SNR}.txt'
   traj = []
@@ -134,7 +141,7 @@ def get_features(model, SNR):
     global l_t
     print(f'Wyciąganie danych z {MODELS[model]} dla SNR = {SNR}')
     T = T_long
-    trajs = read_data(model, SNR)
+    trajs = read_traj(model, SNR)
     traj_num = len(trajs)
     print()
     # odczyt danych z trajektorii
@@ -178,7 +185,7 @@ def repair_fractal_dim():
     for model in [1]:
         print(MODELS[model])
         for SNR in SNRs:
-            trajs = read_data(model, SNR)
+            trajs = read_traj(model, SNR)
             table = pd.read_csv(f'data/{MODELS[model]}_noisy_{SNR}_features.csv')
             for i in range(len(trajs)):
                 if i%500 == 0:
