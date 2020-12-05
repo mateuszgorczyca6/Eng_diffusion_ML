@@ -64,3 +64,23 @@ Jupyter notebook:
     </ul>
     <li> [<font color='red'>ERROR</font>] To repair get_features (rework for new data mode)
 </ul>
+
+<b>v0.1.1</b>
+
+<ul>
+    <li> Global
+    <ul>
+        <li> TAMSD moved from TAMSD.py to get_features.py
+        <li> Added functions to split and join too big for github pandas dataframes
+    </ul>
+    <li> Generating and reading trajectories
+    <ul>
+        <li> Added missing logs
+    </ul>
+    <li> Get features
+    <ul>
+        <li> Get_features reworked to new data generated
+        <li> Removed function repairing fractal dimmension (no longer usefull)
+        <li> Added features from trajectories
+    </ul>
+</ul>

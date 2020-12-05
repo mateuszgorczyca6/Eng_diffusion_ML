@@ -1,19 +1,10 @@
-from get_features import read_traj, norm, diffusivity
+from get_features import read_traj, norm, diffusivity, TAMSD
 from generating_data import read_real_expo, dirmake
 from numpy import log
 import pandas as pd
 from matplotlib import pyplot as plt
 import multiprocessing as mp
 from functools import partial
-
-def TAMSD(s, T):
-  tamsds = [0] * T
-  for n in range(1, T): # gaps
-    suma = 0
-    for i in range(T - n):
-      suma += (s[i+n] - s[i]) ** 2
-    tamsds[n] = suma / (T - n)
-  return tamsds
 
 def estimate_expo(t, tamsds, D, T):
   log_t_2 = [log(i) ** 2 for i in t]
@@ -45,10 +36,9 @@ def TAMSD_estimation_traj(part, traj_num, give):
       print(f'TAMSDS - estymacja - {liczydlo}/{traj_num/3} --- estimate -> {est_exp}/{real_exp} <- real')
     return result
 
-def TAMSD_estimation(trajectories, part):
+def TAMSD_estimation(trajectories, exps, part):
   global liczydlo
   if part == 1:
-    exps = read_real_expo(part)
     print('Obliczanie estymacji TAMSDS...')
     liczydlo = 0
     traj_num = len(trajectories)

@@ -14,10 +14,12 @@ def dirmake(ptch):
         if not path.exists(pach):mkdir(pach)
 
 def generate_trajectories(N, T, part):
+  print('Generowanie trajektorii')
   if part == 1:
     path = 'data/part1/generated/'
     dirmake(path)
     AD.andi_dataset(N = N, tasks = 1, dimensions = 2, save_dataset = True, min_T=T-1, max_T=T, path_datasets=path)
+  print(' --- ZAKOŃCZONO')
 
 def read_trajectories(part):
   print('Ładowanie trajektorii')
@@ -42,10 +44,11 @@ def read_trajectories(part):
       n += 1
       if n%500 == 0:
         print(f'czytanie trajektorii - {n}/{l_t}')
-    print(' --- ZAKOŃCZONO')
+  print(' --- ZAKOŃCZONO')
   return trajectories
 
 def read_real_expo(part):
+  print('Ładowanie prawdziwych wartości exp...')
   if part == 1:
     path = 'data/part1/generated/'
     exps = []
@@ -54,9 +57,12 @@ def read_real_expo(part):
         traj = traj.strip()
         traj = float(traj.split(';')[1])
         exps.append(traj)
+  print(' --- ZAKOŃCZONO')
   return exps
 
 def read_TAMSD(part):
+  print('Ładowanie wartości wyestymowanych w TAMSD')
   if part == 1:
     traj_info = pd.read_csv('data/part1/TAMSD/estimated.csv')
+  print(' --- ZAKOŃCZONO')
   return traj_info

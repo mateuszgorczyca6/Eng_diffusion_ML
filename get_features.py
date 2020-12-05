@@ -1,12 +1,18 @@
-import numba
 import multiprocessing as mp
 from functools import partial
-from global_params import MODELS, T_long
 import pandas as pd
 from numpy import linalg as LA
 from numpy import log, exp, mean, var
-from numpy import arange, array, zeros
-from time import time
+from generating_data import dirmake
+
+def TAMSD(s, T):
+  tamsds = [0] * T
+  for n in range(1, T): # gaps
+    suma = 0
+    for i in range(T - n):
+      suma += (s[i+n] - s[i]) ** 2
+    tamsds[n] = suma / (T - n)
+  return tamsds
 
 def read_traj(model, SNR, n = 0):
   models = ['attm', 'ctrw', 'fbm', 'lw', 'sbm']
@@ -97,17 +103,17 @@ def max_distance(x, y, T):
     return max_d
 
 def trappedness(D, T, max_dist):
-    return 1-exp(0.2045 - 0.25117 * D * T / (max_dist / 2) ** 2)
+    return abs(1-exp(0.2045 - 0.25117 * D * T / (max_dist / 2) ** 2))
 
 def fractal_dimension(T, max_dist, length):
     return log(T) / log(T * max_dist / length)
 
-def get_info(T, s_n, model, SNR, traj_num, traj):
+def get_info(s_n, traj_num, give):
     global l_t
-    traj = traj[0]
-    ex = traj[0]
-    x = traj[1]                                       # położenie x
-    y = traj[2]                                       # położenie y
+    ex, traj = give
+    x = traj[0]                                       # położenie x
+    y = traj[1]                                       # położenie y
+    T = len(x) - 1                                    # długość trajektorii
     s_x, s_y = movement_to_steps(x, y, T+1)           # przesunięcia w x i y
     s = norm(s_x, s_y, T)                             # długości kroków
     length = sum(s)                                   # długość trajektorii (dystans)
@@ -125,77 +131,49 @@ def get_info(T, s_n, model, SNR, traj_num, traj):
     frac_dim = fractal_dimension(T + 1, max_dist, length) # wymiar fraktalny
     l_t += 1
     if l_t%500==0:
-        print(f'odczyt - {MODELS[model]} - {SNR} - {l_t}/{traj_num / 3}')
+        print(f'odczyt - {l_t}/{traj_num / 3}')
     return ex, D, E, ss, kappas, G, S, R, max_dist, Trap, frac_dim
 
-def get_features(model, SNR):
-    global l_t
-    print(f'Wyciąganie danych z {MODELS[model]} dla SNR = {SNR}')
-    T = T_long
-    trajs = read_traj(model, SNR)
-    traj_num = len(trajs)
-    print()
-    # odczyt danych z trajektorii
-    print('Odczyt danych z trajektorii')
-    l_t = 0
-    with mp.Pool(3) as pool:
-        temp = partial(get_info, T, 5, model, SNR, traj_num)
-        result = pool.map(temp, trajs)
-        pool.close()
-        pool.join()
-    # zapis do pandas
-    print('Zmiana rozszerzenia')
-    traj_info = pd.DataFrame(columns=['SNR',
-                                    'alpha',
-                                    'diffusivity',
-                                    'efficiency',
-                                    'slowdown',
-                                    'MSD_ratio',
-                                    'antigaussinity',
-                                    'straigthness',
-                                    'autocorrelation',
-                                    'max_distance',
-                                    'trappedness',
-                                    'fractal_dim'],
-                            index = range(traj_num))
-    l_t = 0
-    for traj in result:
-        traj_info.loc[l_t] = [SNR, *traj]
-        l_t += 1
-        if l_t%500==0:
-            print(f'translacja - {MODELS[model]} - {SNR} - {l_t}/{traj_num}')
-    # zapis do pliku
-    print(f'Zapisywanie danych do pliku data/{MODELS[model]}_noisy_{SNR}_features.csv ', end = '')
-    traj_info.to_csv(f'data/{MODELS[model]}_noisy_{SNR}_features.csv')
-    print(' --- ZAKOŃCZONO')
-    return traj_info
-    
-def repair_fractal_dim():
-    T = T_long
-    #for model in [1,2]:
-    for model in [1]:
-        print(MODELS[model])
-        for SNR in SNRs:
-            trajs = read_traj(model, SNR)
-            table = pd.read_csv(f'data/{MODELS[model]}_noisy_{SNR}_features.csv')
-            for i in range(len(trajs)):
-                if i%500 == 0:
-                    print(f'{i}/{len(trajs)}')
-                x = trajs[i][0][1]
-                y = trajs[i][0][2]
-                s_x, s_y = movement_to_steps(x, y, T+1)
-                s = norm(s_x, s_y, T)
-                length = sum(s)
-                max_dist = table['max_distance'][i]
-                frac_dim = fractal_dimension(T + 1, max_dist, length)
-                table.at[i, 'fractal_dim'] = frac_dim
-            table.to_csv(f'data/{MODELS[model]}_noisy_{SNR}_features.csv')
-
-if __name__ == '__main__':
-    T = T_long
-    #for model in [1,2]:
-    for model in [2]:
-        print(MODELS[model])
-        for SNR in SNRs:
-            get_features(model, SNR)
-    # repair_fractal_dim()
+def get_features(trajectories, exps, part):
+    if part == 1:
+        print('Wyciąganie parametrów z trajektorji...')
+        global l_t
+        # odczyt danych z trajektorii
+        l_t = 0
+        traj_num = len(trajectories)
+        # 2 argumenty iterwane do poola
+        give = []
+        for i in range(traj_num):
+            give.append([exps[i], trajectories[i]])
+        with mp.Pool(3) as pool:
+            temp = partial(get_info, 5, traj_num)
+            result = pool.map(temp, give)
+            pool.close()
+            pool.join()
+        # zapis do pandas
+        traj_info = pd.DataFrame(columns=['alpha',
+                                          'diffusivity',
+                                          'efficiency',
+                                          'slowdown',
+                                          'MSD_ratio',
+                                          'antigaussinity',
+                                          'straigthness',
+                                          'autocorrelation',
+                                          'max_distance',
+                                          'trappedness',
+                                          'fractal_dim'],
+                                 index = range(traj_num))
+        l_t = 0
+        for traj in result:
+            traj_info.loc[l_t] = traj
+            l_t += 1
+            if l_t%500==0:
+                print(f'translacja - {l_t}/{traj_num}')
+        # zapis do pliku
+        path = 'data/part1/ML'
+        dirmake(path)
+        fname = 'data/part1/ML/features.csv'
+        print(f'Zapisywanie danych do pliku {fname}')
+        traj_info.to_csv(fname)
+        print(' --- ZAKOŃCZONO')
+        return traj_info
