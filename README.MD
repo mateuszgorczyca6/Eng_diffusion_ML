@@ -84,3 +84,32 @@ Jupyter notebook:
         <li> Added features from trajectories
     </ul>
 </ul>
+
+<b>v0.1.2</b>
+
+<ul>
+    <li> Changed github to divide all file types (not only )
+    <li> Removed printing of dataframe after join
+    <li> Generating and reading trajectories
+    <ul>
+        <li> Added function reading features for Machine Learning
+        <li> Saved models and estimations for new methods
+    </ul>
+    <li> Get features
+    <ul>
+        <li> Changed listed values to first and five
+    </ul>
+    <li> Machine Learning
+    <ul>
+        <li> Added multidimension linear regression method.
+        <li> Added decision tree method.
+        <li> Added decision tree plot after generate
+        <li> Added random forest method.
+    </ul>
+    <li> Testing
+    <ul>
+        <li> Added R^2 test.
+        <li> Added tests based on eps.
+        <li> Added max_error.
+    </ul>
+</ul>

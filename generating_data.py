@@ -66,3 +66,10 @@ def read_TAMSD(part):
     traj_info = pd.read_csv('data/part1/TAMSD/estimated.csv')
   print(' --- ZAKOŃCZONO')
   return traj_info
+
+def read_ML_features(part):
+  print('Ładowanie właściwości ruchu dla ML')
+  if part == 1:
+    traj_info = pd.read_csv('data/part1/ML/features.csv', index_col='Unnamed: 0')
+  print(' --- ZAKOŃCZONO')
+  return traj_info

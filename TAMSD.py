@@ -65,6 +65,6 @@ def TAMSD_estimation(trajectories, exps, part):
     path = 'data/part1/TAMSD/'
     dirmake(path)
     fname = path + str('estimated.csv')
-    print(f'Zapisywanie trajektorii do pliku {fname}')
+    print(f'Zapisywanie wyników do pliku {fname}')
     traj_info.to_csv(fname)
     print(' --- ZAKOŃCZONO')

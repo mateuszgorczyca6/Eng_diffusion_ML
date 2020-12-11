@@ -122,17 +122,23 @@ def get_info(s_n, traj_num, give):
     E = efficiency(x, y, s, T)                        # wydajność
     ss = slowdown(s_n, s)                             # współczynnik spowolnienia
     kappas = msd_ratio(tamsds, T)                     # współczynniki MSD dla różnych n
+    kappa1 = kappas[1]
+    kappa5 = kappas[5]
     tamsds4 = TAMSD4(s, T)                            # czasowe średnie odchylenie ^4
     G = antigaussinity(tamsds, tamsds4, T)            # anty-gaussyjność
+    G1 = G[1]
+    G5 = G[5]
     S = straightness(s, length)                       # liniowość
     R = autocorr(s, T)                                # autokorelacja
+    R1 = R[1]
+    R5 = R[5]
     max_dist = max_distance(x, y, T + 1)              # maksymalny dystans między punktami
     Trap = trappedness(D, T + 1, max_dist)            # współczynnik uwięzienia
     frac_dim = fractal_dimension(T + 1, max_dist, length) # wymiar fraktalny
     l_t += 1
     if l_t%500==0:
         print(f'odczyt - {l_t}/{traj_num / 3}')
-    return ex, D, E, ss, kappas, G, S, R, max_dist, Trap, frac_dim
+    return ex, D, E, ss, kappa1, kappa5, G1, G5, S, R1, R5, max_dist, Trap, frac_dim
 
 def get_features(trajectories, exps, part):
     if part == 1:
@@ -155,10 +161,13 @@ def get_features(trajectories, exps, part):
                                           'diffusivity',
                                           'efficiency',
                                           'slowdown',
-                                          'MSD_ratio',
-                                          'antigaussinity',
+                                          'MSD_ratio1',
+                                          'MSD_ratio5',
+                                          'antigaussinity1',
+                                          'antigaussinity5',
                                           'straigthness',
-                                          'autocorrelation',
+                                          'autocorrelation1',
+                                          'autocorrelation5',
                                           'max_distance',
                                           'trappedness',
                                           'fractal_dim'],
