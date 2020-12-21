@@ -1,6 +1,7 @@
 from numpy import mean
 import pandas as pd
 from matplotlib import pyplot as plt
+import seaborn as sns
 
 def test_model(predicted_values, real_values, model_name):
     N = len(predicted_values)
@@ -35,7 +36,11 @@ def test_model(predicted_values, real_values, model_name):
                              'eps = 0.025': counter25/N,
                              'max_error': max_mistake},
                             index = [model_name])
-    plt.plot(real_values, predicted_values, '.', alpha = 0.25)
+    # plt.plot(real_values, predicted_values, '.', alpha = 0.25)
+    sns.displot({'r': real_values, 'e': predicted_values}, x = 'r', y = 'e', cbar=True)
+    plt.plot([0,2], [0,2], color = 'black')
+    plt.title(model_name)
+    plt.show()
     return strength, errors
 
 
@@ -45,23 +50,50 @@ def dojob(path, name):
     real_data = list(data['expo'])
     return test_model(est_data, real_data, name)
 
-# err = []
-# table, er = dojob('data/part1/TAMSD/estimated.csv', 'TAMSD')
-# ttable = table
-# err.append(er)
-# table, er = dojob('data/part1/ML/linear_regression/estimated.csv', 'linear regression')
-# ttable = pd.concat([ttable, table])
-# err.append(er)
-# table, er = dojob('data/part1/ML/decision_tree/estimated.csv', 'decision tree')
-# ttable = pd.concat([ttable, table])
-# err.append(er)
-# table, er = dojob('data/part1/ML/random_forest/estimated.csv', 'random forest')
-# ttable = pd.concat([ttable, table])
-# err.append(er)
+err = {}
+table, er = dojob('data/part1/modelA/TAMSD/estimated.csv', 'TAMSD')
+ttable = table
+err['TAMSD'] = er
+table, er = dojob('data/part1/modelA/ML/linear_regression/estimated.csv', 'linear regression')
+ttable = pd.concat([ttable, table])
+err['linear regression'] = er
+table, er = dojob('data/part1/modelA/ML/decision_tree/estimated.csv', 'decision tree')
+ttable = pd.concat([ttable, table])
+err['decision tree'] = er
+table, er = dojob('data/part1/modelA/ML/random_forest/estimated.csv', 'random forest')
+ttable = pd.concat([ttable, table])
+err['random forest'] = er
+table, er = dojob('data/part1/modelA/ML/gradient_boosting/estimated.csv', 'gradient boosting')
+ttable = pd.concat([ttable, table])
+err['gradient boosting'] = er
 
-# print(ttable)
-# plt.plot([0,2], [0,2])
-# plt.show()
+print(ttable)
+box = plt.boxplot(labels = err.keys(), x = err.values(), patch_artist=True, notch = True, vert = True)
+plt.title('boxplot')
+colors = ['lightblue', 'orange', 'lightgreen', 'pink', 'violet']
+for path, color in zip(box['boxes'], colors):
+    path.set_facecolor(color)
+plt.show()
 
-# plt.boxplot(err)
-# plt.show()
+
+sns.displot(err, common_norm=False, stat="density")
+plt.plot([0,0], [0,1.3], color = 'black')
+
+plt.show()
+
+sns.displot(err, kind = "kde", common_norm=False, bw_adjust = 0.7, fill=True)
+plt.plot([0,0], [0,1.3], color = 'black')
+
+plt.show()
+
+
+sns.displot(err, kind = "kde", common_norm=False, bw_adjust=2)
+plt.plot([0,0], [0,1.3], color = 'black')
+
+plt.show()
+
+
+sns.displot(err, kind = "ecdf")
+plt.plot([0,0], [0,1.3], color = 'black')
+
+plt.show()

@@ -2,37 +2,21 @@ import multiprocessing as mp
 from functools import partial
 import pandas as pd
 from numpy import linalg as LA
-from numpy import log, exp, mean, var
+from numpy import log, exp, mean, var, cumsum
 from generating_data import dirmake
+from global_params import logg
+from datetime import datetime
 
-def TAMSD(s, T):
+from matplotlib import pyplot as plt
+
+def TAMSD(r, T):
   tamsds = [0] * T
   for n in range(1, T): # gaps
     suma = 0
     for i in range(T - n):
-      suma += (s[i+n] - s[i]) ** 2
+      suma += (r[i+n]-r[i]) ** 2
     tamsds[n] = suma / (T - n)
   return tamsds
-
-def read_traj(model, SNR, n = 0):
-  models = ['attm', 'ctrw', 'fbm', 'lw', 'sbm']
-  fname = f'data/{models[model]}_noisy_{SNR}.txt'
-  traj = []
-  print(f'ODCZYT PLIKU {fname}', end='')
-  with open(fname) as f:
-    lines = f.readlines()
-  print(' --- ZAKOŃCZONO')
-  print('Zapisywanie wartości:')
-  if n == 0:
-    num_lines = len(lines)
-  else:
-    num_lines = n
-  for l_n in range(num_lines):
-    line = lines[l_n]
-    traj.append([eval(line.strip())])
-    if l_n%5000==0:
-      print(f'{fname} - {l_n}/{num_lines}')
-  return traj
 
 def movement_to_steps(x,y,T):
     ''' Zwraca krok zamiast pozycji.'''
@@ -64,12 +48,12 @@ def msd_ratio(tamsds, T):
         kappas[n] = tamsds[n] / tamsds[n+1] - n / (n+1)
     return kappas
 
-def TAMSD4(s, T):
+def TAMSD4(r, T):
     tamsds = [0] * T
     for n in range(1, T): # gaps
         suma = 0
         for i in range(T - n):
-            suma += (s[i+n] - s[i]) ** 4
+            suma += (r[i+n] - r[i]) ** 4
         tamsds[n] = suma / (T - n)
     return tamsds
 
@@ -77,10 +61,12 @@ def antigaussinity(tamsds, tamsds4, T):
     Gs = [0] * (T - 1)
     for delt in range(1, T):
         Gs[delt - 1] = tamsds4[delt] / (2 * tamsds[delt])
+        if Gs[delt - 1] >= 10 ** 5:
+            Gs[delt - 1] = 10 ** 5
     return Gs
 
-def straightness(s, length):
-    return s[-1] / length
+def straightness(r, length):
+    return r[-1] / length
 
 def autocorr(s, T):
     E = mean(s)
@@ -112,23 +98,24 @@ def get_info(s_n, traj_num, give):
     global l_t
     ex, traj = give
     x = traj[0]                                       # położenie x
-    y = traj[1]                                       # położenie y
-    T = len(x) - 1                                    # długość trajektorii
+    y = traj[1]                                       # położenie
+    T = len(x) - 1                                    # położenie y
+    r = norm(x,y,T)                                   # długość trajektorii
     s_x, s_y = movement_to_steps(x, y, T+1)           # przesunięcia w x i y
     s = norm(s_x, s_y, T)                             # długości kroków
     length = sum(s)                                   # długość trajektorii (dystans)
-    tamsds = TAMSD(s, T)                              # współczynniki TAMSD
+    tamsds = TAMSD(r, T)                              # współczynniki TAMSD
     D = diffusivity(tamsds[1])                        # współczynnik dyfuzyjności
     E = efficiency(x, y, s, T)                        # wydajność
     ss = slowdown(s_n, s)                             # współczynnik spowolnienia
     kappas = msd_ratio(tamsds, T)                     # współczynniki MSD dla różnych n
     kappa1 = kappas[1]
     kappa5 = kappas[5]
-    tamsds4 = TAMSD4(s, T)                            # czasowe średnie odchylenie ^4
+    tamsds4 = TAMSD4(r, T)                            # czasowe średnie odchylenie ^4
     G = antigaussinity(tamsds, tamsds4, T)            # anty-gaussyjność
     G1 = G[1]
     G5 = G[5]
-    S = straightness(s, length)                       # liniowość
+    S = straightness(r, length)                       # liniowość
     R = autocorr(s, T)                                # autokorelacja
     R1 = R[1]
     R5 = R[5]
@@ -140,15 +127,17 @@ def get_info(s_n, traj_num, give):
         print(f'odczyt - {l_t}/{traj_num / 3}')
     return ex, D, E, ss, kappa1, kappa5, G1, G5, S, R1, R5, max_dist, Trap, frac_dim
 
-def get_features(trajectories, exps, part):
+def get_features(trajectories, exps, part, Model):
     if part == 1:
         print('Wyciąganie parametrów z trajektorji...')
         global l_t
-        # odczyt danych z trajektorii
+        ### odczyt danych z trajektorii
         l_t = 0
         traj_num = len(trajectories)
         # 2 argumenty iterwane do poola
         give = []
+        logg('ML - wyciąganie danych - start')
+        start = datetime.now()
         for i in range(traj_num):
             give.append([exps[i], trajectories[i]])
         with mp.Pool(3) as pool:
@@ -156,7 +145,7 @@ def get_features(trajectories, exps, part):
             result = pool.map(temp, give)
             pool.close()
             pool.join()
-        # zapis do pandas
+        ### zapis do pandas
         traj_info = pd.DataFrame(columns=['alpha',
                                           'diffusivity',
                                           'efficiency',
@@ -178,10 +167,12 @@ def get_features(trajectories, exps, part):
             l_t += 1
             if l_t%500==0:
                 print(f'translacja - {l_t}/{traj_num}')
+        stop = datetime.now()
+        logg(f'ML - wyciąganie danych - koniec {stop - start}')
         # zapis do pliku
-        path = 'data/part1/ML'
+        path = f'data/part1/model{Model}/ML'
         dirmake(path)
-        fname = 'data/part1/ML/features.csv'
+        fname = f'data/part1/model{Model}/ML/features.csv'
         print(f'Zapisywanie danych do pliku {fname}')
         traj_info.to_csv(fname)
         print(' --- ZAKOŃCZONO')

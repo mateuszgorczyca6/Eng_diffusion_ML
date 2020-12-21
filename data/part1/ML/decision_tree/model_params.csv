@@ -1,2 +1,0 @@
-,min_samples_split,min_samples_leaf,max_features,max_depth
-decision tree,2,3,auto,10

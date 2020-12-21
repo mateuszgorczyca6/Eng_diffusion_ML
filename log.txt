@@ -1,0 +1,32 @@
+[2020-12-21 00:46:05.823420] START programu...
+[2020-12-21 00:46:06.605853] Starting part 1.
+[2020-12-21 00:46:08.611181] Wybrany model: C.
+[2020-12-21 00:46:40.838151] Wybrane decyzje: n, 0, Y, 6, Y, Y, Y, Y, Y.
+[2020-12-21 00:46:40.841161] GEN - odczyt trajektorii - start [data/part1/modelC/generated/task1.txt]
+[2020-12-21 00:46:53.117677] GEN - odczyt trajektorii - koniec 0:00:12.276203
+[2020-12-21 00:46:53.243878] TAMSD - estymacja - start
+[2020-12-21 00:47:06.763205] TAMSD - estymacja - koniec 0:00:13.519018
+[2020-12-21 00:47:12.818590] ML - wyciąganie danych - start
+[2020-12-21 01:04:40.012087] ML - wyciąganie danych - koniec 0:17:27.193306
+[2020-12-21 01:04:43.298914] ML - regresja liniowa - nauczanie - start
+[2020-12-21 01:04:43.349267] ML - regresja liniowa - nauczanie - koniec 0:00:00.050130
+[2020-12-21 01:04:43.350204] ML - regresja liniowa - przewidywanie - start
+[2020-12-21 01:04:43.355417] ML - regresja liniowa - przewidywanie - koniec 0:00:00.004829
+[2020-12-21 01:04:43.818411] ML - drzewo decyzyjne - szukanie superparametrów - start
+[2020-12-21 01:04:48.112924] ML - drzewo decyzyjne - szukanie superparametrów - koniec 0:00:04.294131
+[2020-12-21 01:04:48.115779] ML - drzewo decyzyjne - nauczanie - start
+[2020-12-21 01:04:49.478623] ML - drzewo decyzyjne - nauczanie - koniec 0:00:01.362689
+[2020-12-21 01:05:00.290893] ML - drzewo decyzyjne - przewidywanie - start
+[2020-12-21 01:05:00.294919] ML - drzewo decyzyjne - przewidywanie - koniec 0:00:00.003733
+[2020-12-21 01:05:00.758988] ML - las losowy - szukanie superparametrów - start
+[2020-12-21 01:13:24.594875] ML - las losowy - szukanie superparametrów - koniec 0:08:23.835718
+[2020-12-21 01:13:24.598275] ML - las losowy - nauczanie - start
+[2020-12-21 01:18:22.525797] ML - las losowy - nauczanie - koniec 0:04:57.927367
+[2020-12-21 01:18:23.726911] ML - las losowy - przewidywanie - start
+[2020-12-21 01:18:25.679078] ML - las losowy - przewidywanie - koniec 0:00:01.862054
+[2020-12-21 01:18:26.100948] ML - wzmocnienie gradientowe - szukanie superparametrów - start
+[2020-12-21 01:37:53.466244] ML - wzmocenienie gradientowe - szukanie superparametrów - koniec 0:19:27.365119
+[2020-12-21 01:37:53.469692] ML - wzmocnienie gradientowe - nauczanie - start
+[2020-12-21 01:39:03.044300] ML - wzmocenienie gradientowe - nauczanie - koniec 0:01:09.574452
+[2020-12-21 01:39:03.059984] ML - wzmocnienie gradientowe - przewidywanie - start
+[2020-12-21 01:39:03.148670] ML - wzmocenienie gradientowe - przewidywanie - koniec 0:00:00.088518

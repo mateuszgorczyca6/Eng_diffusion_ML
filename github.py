@@ -2,7 +2,11 @@
 from os import remove, system
 from itertools import product
 
-to_divide = ['data/part1/ML/random_forest/model.pk1']
+to_divide = ['data/part1/modelA/generated/task1.txt',
+             'data/part1/modelA/ML/random_forest/model.pk1',
+             'data/part1/modelB/ML/random_forest/model.pk1',
+             'data/part1/modelC/generated/task1.txt',
+             'data/part1/modelC/ML/random_forest/model.pk1']
 
 
 
@@ -10,6 +14,7 @@ to_divide = ['data/part1/ML/random_forest/model.pk1']
 for file in to_divide:
     system(f'split -b 90M {file} {file}')
     remove(file)
+    print(file+' --- zakończono')
     
     
     
@@ -23,6 +28,7 @@ for file in to_divide:
             remove(f'{file}{"".join(i)}')
         except:
             pass
+    print(file+' --- zakończono')
     
     
     

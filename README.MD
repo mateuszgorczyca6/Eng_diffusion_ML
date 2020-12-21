@@ -113,3 +113,31 @@ Jupyter notebook:
         <li> Added max_error.
     </ul>
 </ul>
+
+<b>v0.1.3</b>
+
+<ul>
+    <li> Changed project layout for 3 model types.
+    <li> Added log file and time measurment
+    <li> Changed plotting format from png to pdf
+    <li> Git now don't get datasets. Only programs.
+    <li> Machine Learning
+    <ul>
+        <li> Added gradient boosting regressor.
+    </ul>
+    <li> Part 0
+    <ul>
+        <li> Added plotting of example trajectories
+        <li> Added plotting of example and perfect TAMSD
+    </ul>
+    <li> Get features
+    <ul>
+        <li> Repaired badly counted TAMSD.
+        <li> Repaired badly counted TAMSD4.
+        <li> Repaired badly counted straightness.
+    </ul>
+    <li> Machine Learning
+    <ul>
+        <li> Added some safe options to decision tree and random forest regressors.
+    </ul>
+</ul>
