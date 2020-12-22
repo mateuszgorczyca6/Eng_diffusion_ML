@@ -2,21 +2,21 @@ import multiprocessing as mp
 from functools import partial
 import pandas as pd
 from numpy import linalg as LA
-from numpy import log, exp, mean, var, cumsum
+from numpy import log, exp, mean, var, cumsum, sqrt
+import numpy as np
 from generating_data import dirmake
 from global_params import logg
 from datetime import datetime
 
 from matplotlib import pyplot as plt
 
-def TAMSD(r, T):
-  tamsds = [0] * T
-  for n in range(1, T): # gaps
-    suma = 0
-    for i in range(T - n):
-      suma += (r[i+n]-r[i]) ** 2
-    tamsds[n] = suma / (T - n)
-  return tamsds
+def TAMSD(x, y, T):
+    tamsds = [0]
+    x, y = np.array(x), np.array(y)
+    for lag in range(1, T):
+        r = (x[lag:] - x[:-lag]) ** 2 + (y[lag:] - y[:-lag]) ** 2
+        tamsds.append(r.mean())
+    return tamsds
 
 def movement_to_steps(x,y,T):
     ''' Zwraca krok zamiast pozycji.'''
@@ -30,7 +30,7 @@ def movement_to_steps(x,y,T):
 def norm(x,y, T):
     l = [0] * (T)
     for i in range(T):
-        l[i] = LA.norm([x[i], y[i]])
+        l[i] = sqrt(x[i] ** 2 + y[i] ** 2)
     return l
 
 def diffusivity(rho1):
@@ -48,14 +48,14 @@ def msd_ratio(tamsds, T):
         kappas[n] = tamsds[n] / tamsds[n+1] - n / (n+1)
     return kappas
 
-def TAMSD4(r, T):
-    tamsds = [0] * T
-    for n in range(1, T): # gaps
-        suma = 0
-        for i in range(T - n):
-            suma += (r[i+n] - r[i]) ** 4
-        tamsds[n] = suma / (T - n)
-    return tamsds
+def TAMSD4(x, y, T):
+  tamsds = [0] * T
+  for n in range(1, T): # gaps
+    suma = 0
+    for i in range(T - n):
+      suma += (x[n+i] - x[i]) ** 4 + (y[n+i] - y[i]) ** 4
+    tamsds[n] = suma / (T - n)
+  return tamsds
 
 def antigaussinity(tamsds, tamsds4, T):
     Gs = [0] * (T - 1)
@@ -104,14 +104,14 @@ def get_info(s_n, traj_num, give):
     s_x, s_y = movement_to_steps(x, y, T+1)           # przesunięcia w x i y
     s = norm(s_x, s_y, T)                             # długości kroków
     length = sum(s)                                   # długość trajektorii (dystans)
-    tamsds = TAMSD(r, T)                              # współczynniki TAMSD
+    tamsds = TAMSD(x, y, T)                              # współczynniki TAMSD
     D = diffusivity(tamsds[1])                        # współczynnik dyfuzyjności
     E = efficiency(x, y, s, T)                        # wydajność
     ss = slowdown(s_n, s)                             # współczynnik spowolnienia
     kappas = msd_ratio(tamsds, T)                     # współczynniki MSD dla różnych n
     kappa1 = kappas[1]
     kappa5 = kappas[5]
-    tamsds4 = TAMSD4(r, T)                            # czasowe średnie odchylenie ^4
+    tamsds4 = TAMSD4(x, y, T)                            # czasowe średnie odchylenie ^4
     G = antigaussinity(tamsds, tamsds4, T)            # anty-gaussyjność
     G1 = G[1]
     G5 = G[5]

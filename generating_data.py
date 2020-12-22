@@ -32,7 +32,7 @@ def generate_trajectories(N, part, Model):
     log(f'GEN - generowanie trajektorii - koniec [{stop - start}]')
   print(' --- ZAKOŃCZONO')
 
-def read_trajectories(part, Model):
+def read_trajectories(part, Model, mode = 'all', N = 0):
   print('Ładowanie trajektorii')
   if part == 1:
     path = f'data/part1/model{Model}/generated/'
@@ -43,6 +43,10 @@ def read_trajectories(part, Model):
     with open(path+'task1.txt') as f:
       n = 0
       trajs = f.readlines()
+    if mode == 'start':
+      trajs = trajs[:N]
+    if mode == 'end':
+      trajs = trajs[N:]
     l_t = len(trajs)
     for traj in trajs:
       traj = traj.strip()

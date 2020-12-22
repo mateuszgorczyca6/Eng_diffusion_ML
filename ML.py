@@ -24,8 +24,8 @@ from global_params import logg as log
 from datetime import datetime
 from math import floor
 
-def split_data(dataset, learning_part, part):
-    train_dataset = dataset[:number_to_learn]
+def split_data(dataset, learning_part):
+    train_dataset = dataset[:learning_part]
     test_dataset = dataset.drop(train_dataset.index)
     train_labels = train_dataset.pop('alpha')
     test_labels = test_dataset.pop('alpha')

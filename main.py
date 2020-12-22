@@ -47,7 +47,7 @@ if part == 1:
     print(64 * '-')
     
     N = N_long
-    path = f'data/part1/model{Model}/'
+    path = f'data/part{part}/model{Model}/'
     dirmake(path)
     traject_loaded = False
     expo_loaded = False

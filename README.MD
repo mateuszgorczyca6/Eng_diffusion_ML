@@ -141,3 +141,10 @@ Jupyter notebook:
         <li> Added some safe options to decision tree and random forest regressors.
     </ul>
 </ul>
+
+<b>v0.1.4</b>
+
+<ul>
+    <li> Added some testing options
+    <li> Changed TAMSD estimation
+</ul>
