@@ -1,127 +1,208 @@
-[2020-12-22 12:45:00.760038] START programu...
-[2020-12-22 12:45:00.760223] Starting part 1.
-[2020-12-22 12:45:01.449633] Wybrany model: A.
-[2020-12-22 12:45:05.149937] Wybrane decyzje: n, 0, Y, 6, n, n, n, n, n.
-[2020-12-22 12:45:05.150610] GEN - odczyt trajektorii - start [data/part1/modelA/generated/task1.txt]
-[2020-12-22 12:45:24.462181] GEN - odczyt trajektorii - koniec 0:00:19.311289
-[2020-12-22 12:45:24.756084] TAMSD - estymacja - start
-[2020-12-22 12:45:49.032785] TAMSD - estymacja - koniec 0:00:24.276363
-[2020-12-22 12:47:47.651005] GEN - odczyt trajektorii - start [data/part1/modelA/generated/task1.txt]
-[2020-12-22 12:48:11.146458] GEN - odczyt trajektorii - koniec 0:00:23.495259
-[2020-12-22 12:48:11.540338] TAMSD - estymacja - start
-[2020-12-22 12:48:27.063743] TAMSD - estymacja - koniec 0:00:15.523190
-[2020-12-22 12:48:42.148454] ML - LinearRegression(n_jobs=-1, normalize=True) - przewidywanie - start
-[2020-12-22 12:48:42.152679] ML - LinearRegression(n_jobs=-1, normalize=True) - przewidywanie - koniec 0:00:00.003625
-[2020-12-22 12:52:12.440709] GEN - odczyt trajektorii - start [data/part1/modelA/generated/task1.txt]
-[2020-12-22 12:52:14.528049] GEN - odczyt trajektorii - koniec 0:00:02.087153
-[2020-12-22 12:52:32.731684] GEN - odczyt trajektorii - start [data/part1/modelA/generated/task1.txt]
-[2020-12-22 12:52:34.800008] GEN - odczyt trajektorii - koniec 0:00:02.068139
-[2020-12-22 12:52:34.839268] TAMSD - estymacja - start
-[2020-12-22 12:52:47.592991] TAMSD - estymacja - koniec 0:00:12.753536
-[2020-12-22 12:53:00.329488] ML - LinearRegression(n_jobs=-1, normalize=True) - przewidywanie - start
-[2020-12-22 12:53:00.333446] ML - LinearRegression(n_jobs=-1, normalize=True) - przewidywanie - koniec 0:00:00.003371
-[2020-12-22 12:53:12.855864] ML - DecisionTreeRegressor(max_depth=7, max_features='auto', min_samples_leaf=4,
+[2020-12-26 20:26:56.308542] START programu...
+[2020-12-26 20:26:56.831250] Starting part 2.
+[2020-12-26 20:26:58.218707] Wybrany model: C.
+[2020-12-26 20:27:03.587127] Wybrane decyzje: n, 0, n, 0, n, n, n, n, Y.
+[2020-12-26 20:27:04.191324] ML - wzmocnienie gradientowe - szukanie superparametrów - start
+[2020-12-26 20:46:58.749870] ML - wzmocenienie gradientowe - szukanie superparametrów - koniec 0:19:54.558361
+[2020-12-26 20:46:58.776479] ML - wzmocnienie gradientowe - nauczanie - start
+[2020-12-26 20:51:25.718841] ML - wzmocenienie gradientowe - nauczanie - koniec 0:04:26.942173
+[2020-12-26 20:51:25.845530] ML - wzmocnienie gradientowe - przewidywanie - start
+[2020-12-26 20:51:26.121098] ML - wzmocenienie gradientowe - przewidywanie - koniec 0:00:00.275371
+[2020-12-26 21:09:59.819003] GEN - odczyt trajektorii - start [data/part2/modelA/generated/task1.txt]
+[2020-12-26 21:10:07.050349] GEN - odczyt trajektorii - koniec 0:00:07.230648
+[2020-12-26 21:10:07.728264] TAMSD - estymacja - start
+[2020-12-26 21:10:37.569792] TAMSD - estymacja - koniec 0:00:29.818749
+[2020-12-26 21:10:57.669719] ML - LinearRegression(n_jobs=-1, normalize=True) - przewidywanie - start
+[2020-12-26 21:10:57.676000] ML - LinearRegression(n_jobs=-1, normalize=True) - przewidywanie - koniec 0:00:00.005682
+[2020-12-26 21:11:15.095849] ML - DecisionTreeRegressor(max_depth=7, max_features='auto', min_samples_leaf=4,
                       min_samples_split=9) - przewidywanie - start
-[2020-12-22 12:53:12.880571] ML - DecisionTreeRegressor(max_depth=7, max_features='auto', min_samples_leaf=4,
-                      min_samples_split=9) - przewidywanie - koniec 0:00:00.023819
-[2020-12-22 12:53:27.792674] ML - RandomForestRegressor(max_depth=15, max_features='sqrt', max_samples=0.8,
-                      min_samples_leaf=3, min_samples_split=6,
-                      n_estimators=800) - przewidywanie - start
-[2020-12-22 12:53:29.331126] ML - RandomForestRegressor(max_depth=15, max_features='sqrt', max_samples=0.8,
-                      min_samples_leaf=3, min_samples_split=6,
-                      n_estimators=800) - przewidywanie - koniec 0:00:01.537662
-[2020-12-22 12:53:39.744752] ML - GradientBoostingRegressor(learning_rate=0.0625, max_depth=7,
-                          max_features='sqrt', min_samples_leaf=5,
-                          n_estimators=200) - przewidywanie - start
-[2020-12-22 12:53:39.843577] ML - GradientBoostingRegressor(learning_rate=0.0625, max_depth=7,
-                          max_features='sqrt', min_samples_leaf=5,
-                          n_estimators=200) - przewidywanie - koniec 0:00:00.097852
-[2020-12-22 12:55:36.893097] GEN - odczyt trajektorii - start [data/part1/modelA/generated/task1.txt]
-[2020-12-22 12:55:50.207437] GEN - odczyt trajektorii - start [data/part1/modelA/generated/task1.txt]
-[2020-12-22 12:55:52.312178] GEN - odczyt trajektorii - koniec 0:00:02.104517
-[2020-12-22 12:55:52.378549] TAMSD - estymacja - start
-[2020-12-22 12:56:13.196483] TAMSD - estymacja - koniec 0:00:20.817649
-[2020-12-22 12:56:27.131925] ML - LinearRegression(n_jobs=-1, normalize=True) - przewidywanie - start
-[2020-12-22 12:56:27.135318] ML - LinearRegression(n_jobs=-1, normalize=True) - przewidywanie - koniec 0:00:00.002950
-[2020-12-22 12:56:41.379210] ML - DecisionTreeRegressor(max_depth=7, max_features='auto', min_samples_leaf=4,
+[2020-12-26 21:11:15.102575] ML - DecisionTreeRegressor(max_depth=7, max_features='auto', min_samples_leaf=4,
+                      min_samples_split=9) - przewidywanie - koniec 0:00:00.005391
+[2020-12-26 21:11:45.653344] ML - RandomForestRegressor(max_depth=18, max_samples=0.30000000000000004,
+                      min_samples_leaf=2, min_samples_split=3,
+                      n_estimators=900) - przewidywanie - start
+[2020-12-26 21:11:49.030040] ML - RandomForestRegressor(max_depth=18, max_samples=0.30000000000000004,
+                      min_samples_leaf=2, min_samples_split=3,
+                      n_estimators=900) - przewidywanie - koniec 0:00:03.374554
+[2020-12-26 21:12:05.496816] ML - GradientBoostingRegressor(learning_rate=0.014, max_depth=5, max_features='sqrt',
+                          min_samples_leaf=5, min_samples_split=8,
+                          n_estimators=700) - przewidywanie - start
+[2020-12-26 21:12:05.801802] ML - GradientBoostingRegressor(learning_rate=0.014, max_depth=5, max_features='sqrt',
+                          min_samples_leaf=5, min_samples_split=8,
+                          n_estimators=700) - przewidywanie - koniec 0:00:00.303974
+[2020-12-26 21:12:33.401385] GEN - odczyt trajektorii - start [data/part2/modelB/generated/task1.txt]
+[2020-12-26 21:12:35.395737] GEN - odczyt trajektorii - koniec 0:00:01.994121
+[2020-12-26 21:12:35.528150] TAMSD - estymacja - start
+[2020-12-26 21:12:39.744852] TAMSD - estymacja - koniec 0:00:04.216510
+[2020-12-26 21:12:55.699152] ML - LinearRegression(n_jobs=-1, normalize=True) - przewidywanie - start
+[2020-12-26 21:12:55.715186] ML - LinearRegression(n_jobs=-1, normalize=True) - przewidywanie - koniec 0:00:00.015205
+[2020-12-26 21:13:09.560230] ML - DecisionTreeRegressor(max_depth=7, max_features='auto', min_samples_leaf=4,
                       min_samples_split=9) - przewidywanie - start
-[2020-12-22 12:56:41.385660] ML - DecisionTreeRegressor(max_depth=7, max_features='auto', min_samples_leaf=4,
-                      min_samples_split=9) - przewidywanie - koniec 0:00:00.005220
-[2020-12-22 12:56:53.487936] ML - RandomForestRegressor(max_depth=15, max_features='sqrt', max_samples=0.8,
-                      min_samples_leaf=3, min_samples_split=6,
-                      n_estimators=800) - przewidywanie - start
-[2020-12-22 12:56:54.983269] ML - RandomForestRegressor(max_depth=15, max_features='sqrt', max_samples=0.8,
-                      min_samples_leaf=3, min_samples_split=6,
-                      n_estimators=800) - przewidywanie - koniec 0:00:01.494555
-[2020-12-22 12:57:05.397452] ML - GradientBoostingRegressor(learning_rate=0.0625, max_depth=7,
-                          max_features='sqrt', min_samples_leaf=5,
-                          n_estimators=200) - przewidywanie - start
-[2020-12-22 12:57:05.501152] ML - GradientBoostingRegressor(learning_rate=0.0625, max_depth=7,
-                          max_features='sqrt', min_samples_leaf=5,
-                          n_estimators=200) - przewidywanie - koniec 0:00:00.102539
-[2020-12-22 12:57:24.744547] GEN - odczyt trajektorii - start [data/part1/modelB/generated/task1.txt]
-[2020-12-22 12:57:25.977814] GEN - odczyt trajektorii - koniec 0:00:01.233065
-[2020-12-22 12:57:26.013375] TAMSD - estymacja - start
-[2020-12-22 12:57:29.114211] TAMSD - estymacja - koniec 0:00:03.100582
-[2020-12-22 12:57:42.469274] ML - LinearRegression(n_jobs=-1, normalize=True) - przewidywanie - start
-[2020-12-22 12:57:42.481301] ML - LinearRegression(n_jobs=-1, normalize=True) - przewidywanie - koniec 0:00:00.010094
-[2020-12-22 12:57:56.039469] ML - DecisionTreeRegressor(max_depth=7, max_features='auto', min_samples_leaf=4,
+[2020-12-26 21:13:09.566506] ML - DecisionTreeRegressor(max_depth=7, max_features='auto', min_samples_leaf=4,
+                      min_samples_split=9) - przewidywanie - koniec 0:00:00.005341
+[2020-12-26 21:13:34.607292] ML - RandomForestRegressor(max_depth=18, max_samples=0.30000000000000004,
+                      min_samples_leaf=2, min_samples_split=3,
+                      n_estimators=900) - przewidywanie - start
+[2020-12-26 21:13:36.793444] ML - RandomForestRegressor(max_depth=18, max_samples=0.30000000000000004,
+                      min_samples_leaf=2, min_samples_split=3,
+                      n_estimators=900) - przewidywanie - koniec 0:00:02.184293
+[2020-12-26 21:13:51.525785] ML - GradientBoostingRegressor(learning_rate=0.014, max_depth=5, max_features='sqrt',
+                          min_samples_leaf=5, min_samples_split=8,
+                          n_estimators=700) - przewidywanie - start
+[2020-12-26 21:13:51.795010] ML - GradientBoostingRegressor(learning_rate=0.014, max_depth=5, max_features='sqrt',
+                          min_samples_leaf=5, min_samples_split=8,
+                          n_estimators=700) - przewidywanie - koniec 0:00:00.268140
+[2020-12-26 21:14:13.980860] GEN - odczyt trajektorii - start [data/part2/modelC/generated/task1.txt]
+[2020-12-26 21:14:17.788082] GEN - odczyt trajektorii - koniec 0:00:03.807001
+[2020-12-26 21:14:17.924353] TAMSD - estymacja - start
+[2020-12-26 21:14:30.014730] TAMSD - estymacja - koniec 0:00:12.090189
+[2020-12-26 21:14:46.424476] ML - LinearRegression(n_jobs=-1, normalize=True) - przewidywanie - start
+[2020-12-26 21:14:46.430648] ML - LinearRegression(n_jobs=-1, normalize=True) - przewidywanie - koniec 0:00:00.005607
+[2020-12-26 21:15:02.222364] ML - DecisionTreeRegressor(max_depth=7, max_features='auto', min_samples_leaf=4,
                       min_samples_split=9) - przewidywanie - start
-[2020-12-22 12:57:56.045031] ML - DecisionTreeRegressor(max_depth=7, max_features='auto', min_samples_leaf=4,
-                      min_samples_split=9) - przewidywanie - koniec 0:00:00.004324
-[2020-12-22 12:58:07.691205] ML - RandomForestRegressor(max_depth=15, max_features='sqrt', max_samples=0.8,
-                      min_samples_leaf=3, min_samples_split=6,
-                      n_estimators=800) - przewidywanie - start
-[2020-12-22 12:58:08.862738] ML - RandomForestRegressor(max_depth=15, max_features='sqrt', max_samples=0.8,
-                      min_samples_leaf=3, min_samples_split=6,
-                      n_estimators=800) - przewidywanie - koniec 0:00:01.170729
-[2020-12-22 12:58:20.733637] ML - GradientBoostingRegressor(learning_rate=0.0625, max_depth=7,
-                          max_features='sqrt', min_samples_leaf=5,
-                          n_estimators=200) - przewidywanie - start
-[2020-12-22 12:58:20.830120] ML - GradientBoostingRegressor(learning_rate=0.0625, max_depth=7,
-                          max_features='sqrt', min_samples_leaf=5,
-                          n_estimators=200) - przewidywanie - koniec 0:00:00.094971
-[2020-12-22 12:58:40.550175] GEN - odczyt trajektorii - start [data/part1/modelC/generated/task1.txt]
-[2020-12-22 12:58:43.846212] GEN - odczyt trajektorii - koniec 0:00:03.295811
-[2020-12-22 12:58:43.886558] TAMSD - estymacja - start
-[2020-12-22 12:58:54.461018] TAMSD - estymacja - koniec 0:00:10.574283
-[2020-12-22 12:59:11.280479] ML - LinearRegression(n_jobs=-1, normalize=True) - przewidywanie - start
-[2020-12-22 12:59:11.284487] ML - LinearRegression(n_jobs=-1, normalize=True) - przewidywanie - koniec 0:00:00.003533
-[2020-12-22 12:59:27.407611] ML - DecisionTreeRegressor(max_depth=7, max_features='auto', min_samples_leaf=4,
-                      min_samples_split=9) - przewidywanie - start
-[2020-12-22 12:59:27.412697] ML - DecisionTreeRegressor(max_depth=7, max_features='auto', min_samples_leaf=4,
-                      min_samples_split=9) - przewidywanie - koniec 0:00:00.004320
-[2020-12-22 12:59:42.418394] ML - RandomForestRegressor(max_depth=15, max_features='sqrt', max_samples=0.8,
-                      min_samples_leaf=3, min_samples_split=6,
-                      n_estimators=800) - przewidywanie - start
-[2020-12-22 12:59:44.235948] ML - RandomForestRegressor(max_depth=15, max_features='sqrt', max_samples=0.8,
-                      min_samples_leaf=3, min_samples_split=6,
-                      n_estimators=800) - przewidywanie - koniec 0:00:01.816194
-[2020-12-22 12:59:59.065294] ML - GradientBoostingRegressor(learning_rate=0.0625, max_depth=7,
-                          max_features='sqrt', min_samples_leaf=5,
-                          n_estimators=200) - przewidywanie - start
-[2020-12-22 12:59:59.218254] ML - GradientBoostingRegressor(learning_rate=0.0625, max_depth=7,
-                          max_features='sqrt', min_samples_leaf=5,
-                          n_estimators=200) - przewidywanie - koniec 0:00:00.147587
-[2020-12-22 13:00:44.013819] GEN - odczyt trajektorii - start [data/part1/modelA/generated/task1.txt]
-[2020-12-22 13:00:46.472459] GEN - odczyt trajektorii - koniec 0:00:02.458423
-[2020-12-22 13:00:46.512977] TAMSD - estymacja - start
-[2020-12-22 13:01:01.441835] TAMSD - estymacja - koniec 0:00:14.928650
-[2020-12-22 13:01:14.378777] ML - LinearRegression(n_jobs=-1, normalize=True) - przewidywanie - start
-[2020-12-22 13:01:14.385292] ML - LinearRegression(n_jobs=-1, normalize=True) - przewidywanie - koniec 0:00:00.005489
-[2020-12-22 13:01:31.494106] ML - DecisionTreeRegressor(max_depth=5, max_features='auto', min_samples_leaf=3,
+[2020-12-26 21:15:02.229325] ML - DecisionTreeRegressor(max_depth=7, max_features='auto', min_samples_leaf=4,
+                      min_samples_split=9) - przewidywanie - koniec 0:00:00.005714
+[2020-12-26 21:15:21.530691] ML - RandomForestRegressor(max_depth=18, max_samples=0.30000000000000004,
+                      min_samples_leaf=2, min_samples_split=3,
+                      n_estimators=900) - przewidywanie - start
+[2020-12-26 21:15:24.321294] ML - RandomForestRegressor(max_depth=18, max_samples=0.30000000000000004,
+                      min_samples_leaf=2, min_samples_split=3,
+                      n_estimators=900) - przewidywanie - koniec 0:00:02.788927
+[2020-12-26 21:15:41.909197] ML - GradientBoostingRegressor(learning_rate=0.014, max_depth=5, max_features='sqrt',
+                          min_samples_leaf=5, min_samples_split=8,
+                          n_estimators=700) - przewidywanie - start
+[2020-12-26 21:15:42.181811] ML - GradientBoostingRegressor(learning_rate=0.014, max_depth=5, max_features='sqrt',
+                          min_samples_leaf=5, min_samples_split=8,
+                          n_estimators=700) - przewidywanie - koniec 0:00:00.271618
+[2020-12-26 21:16:10.179245] GEN - odczyt trajektorii - start [data/part2/modelA/generated/task1.txt]
+[2020-12-26 21:16:18.355887] GEN - odczyt trajektorii - koniec 0:00:08.174965
+[2020-12-26 21:16:18.441327] TAMSD - estymacja - start
+[2020-12-26 21:16:40.404718] TAMSD - estymacja - koniec 0:00:21.963180
+[2020-12-26 21:17:00.215707] ML - LinearRegression(n_jobs=-1, normalize=True) - przewidywanie - start
+[2020-12-26 21:17:00.221686] ML - LinearRegression(n_jobs=-1, normalize=True) - przewidywanie - koniec 0:00:00.005326
+[2020-12-26 21:17:17.761986] ML - DecisionTreeRegressor(max_depth=5, max_features='auto', min_samples_leaf=3,
                       min_samples_split=3) - przewidywanie - start
-[2020-12-22 13:01:31.502987] ML - DecisionTreeRegressor(max_depth=5, max_features='auto', min_samples_leaf=3,
-                      min_samples_split=3) - przewidywanie - koniec 0:00:00.007747
-[2020-12-22 13:01:46.516477] ML - RandomForestRegressor(max_depth=16, max_features='sqrt', max_samples=0.5,
-                      min_samples_leaf=2, n_estimators=700) - przewidywanie - start
-[2020-12-22 13:01:47.720357] ML - RandomForestRegressor(max_depth=16, max_features='sqrt', max_samples=0.5,
-                      min_samples_leaf=2, n_estimators=700) - przewidywanie - koniec 0:00:01.202836
-[2020-12-22 13:01:58.124418] ML - GradientBoostingRegressor(learning_rate=0.0625, max_depth=2,
-                          max_features='sqrt', min_samples_leaf=4,
-                          min_samples_split=6, n_estimators=1000) - przewidywanie - start
-[2020-12-22 13:01:58.246306] ML - GradientBoostingRegressor(learning_rate=0.0625, max_depth=2,
-                          max_features='sqrt', min_samples_leaf=4,
-                          min_samples_split=6, n_estimators=1000) - przewidywanie - koniec 0:00:00.120904
-[2020-12-22 13:03:46.298409] GEN - odczyt trajektorii - start [data/part1/modelA/generated/task1.txt]
-[2020-12-22 13:03:50.305754] GEN - odczyt trajektorii - koniec 0:00:04.006586
+[2020-12-26 21:17:17.770485] ML - DecisionTreeRegressor(max_depth=5, max_features='auto', min_samples_leaf=3,
+                      min_samples_split=3) - przewidywanie - koniec 0:00:00.007459
+[2020-12-26 21:17:39.825092] ML - RandomForestRegressor(max_depth=16, max_features='sqrt',
+                      max_samples=0.6000000000000001, min_samples_leaf=2,
+                      min_samples_split=10, n_estimators=1000) - przewidywanie - start
+[2020-12-26 21:17:41.852180] ML - RandomForestRegressor(max_depth=16, max_features='sqrt',
+                      max_samples=0.6000000000000001, min_samples_leaf=2,
+                      min_samples_split=10, n_estimators=1000) - przewidywanie - koniec 0:00:01.996842
+[2020-12-26 21:17:55.125216] ML - GradientBoostingRegressor(learning_rate=0.014, max_depth=5, max_features='sqrt',
+                          min_samples_leaf=5, min_samples_split=8,
+                          n_estimators=700) - przewidywanie - start
+[2020-12-26 21:17:55.359374] ML - GradientBoostingRegressor(learning_rate=0.014, max_depth=5, max_features='sqrt',
+                          min_samples_leaf=5, min_samples_split=8,
+                          n_estimators=700) - przewidywanie - koniec 0:00:00.233035
+[2020-12-26 21:18:19.952603] GEN - odczyt trajektorii - start [data/part2/modelB/generated/task1.txt]
+[2020-12-26 21:18:30.403454] GEN - odczyt trajektorii - koniec 0:00:10.450642
+[2020-12-26 21:18:30.502509] TAMSD - estymacja - start
+[2020-12-26 21:18:34.495655] TAMSD - estymacja - koniec 0:00:03.992947
+[2020-12-26 21:18:47.939151] ML - LinearRegression(n_jobs=-1, normalize=True) - przewidywanie - start
+[2020-12-26 21:18:47.943073] ML - LinearRegression(n_jobs=-1, normalize=True) - przewidywanie - koniec 0:00:00.003329
+[2020-12-26 21:18:59.097127] ML - DecisionTreeRegressor(max_depth=5, max_features='auto', min_samples_leaf=3,
+                      min_samples_split=3) - przewidywanie - start
+[2020-12-26 21:18:59.103531] ML - DecisionTreeRegressor(max_depth=5, max_features='auto', min_samples_leaf=3,
+                      min_samples_split=3) - przewidywanie - koniec 0:00:00.005319
+[2020-12-26 21:19:10.534659] ML - RandomForestRegressor(max_depth=16, max_features='sqrt',
+                      max_samples=0.6000000000000001, min_samples_leaf=2,
+                      min_samples_split=10, n_estimators=1000) - przewidywanie - start
+[2020-12-26 21:19:12.992657] ML - RandomForestRegressor(max_depth=16, max_features='sqrt',
+                      max_samples=0.6000000000000001, min_samples_leaf=2,
+                      min_samples_split=10, n_estimators=1000) - przewidywanie - koniec 0:00:02.457251
+[2020-12-26 21:19:23.377492] ML - GradientBoostingRegressor(learning_rate=0.014, max_depth=5, max_features='sqrt',
+                          min_samples_leaf=5, min_samples_split=8,
+                          n_estimators=700) - przewidywanie - start
+[2020-12-26 21:19:23.649535] ML - GradientBoostingRegressor(learning_rate=0.014, max_depth=5, max_features='sqrt',
+                          min_samples_leaf=5, min_samples_split=8,
+                          n_estimators=700) - przewidywanie - koniec 0:00:00.270422
+[2020-12-26 21:19:42.147968] GEN - odczyt trajektorii - start [data/part2/modelC/generated/task1.txt]
+[2020-12-26 21:19:46.359416] GEN - odczyt trajektorii - koniec 0:00:04.211273
+[2020-12-26 21:19:46.458577] TAMSD - estymacja - start
+[2020-12-26 21:19:56.761159] TAMSD - estymacja - koniec 0:00:10.302393
+[2020-12-26 21:20:12.023988] ML - LinearRegression(n_jobs=-1, normalize=True) - przewidywanie - start
+[2020-12-26 21:20:12.029886] ML - LinearRegression(n_jobs=-1, normalize=True) - przewidywanie - koniec 0:00:00.005358
+[2020-12-26 21:20:24.023065] ML - DecisionTreeRegressor(max_depth=5, max_features='auto', min_samples_leaf=3,
+                      min_samples_split=3) - przewidywanie - start
+[2020-12-26 21:20:24.027844] ML - DecisionTreeRegressor(max_depth=5, max_features='auto', min_samples_leaf=3,
+                      min_samples_split=3) - przewidywanie - koniec 0:00:00.004036
+[2020-12-26 21:20:39.194091] ML - RandomForestRegressor(max_depth=16, max_features='sqrt',
+                      max_samples=0.6000000000000001, min_samples_leaf=2,
+                      min_samples_split=10, n_estimators=1000) - przewidywanie - start
+[2020-12-26 21:20:41.299300] ML - RandomForestRegressor(max_depth=16, max_features='sqrt',
+                      max_samples=0.6000000000000001, min_samples_leaf=2,
+                      min_samples_split=10, n_estimators=1000) - przewidywanie - koniec 0:00:02.104393
+[2020-12-26 21:20:57.583470] ML - GradientBoostingRegressor(learning_rate=0.014, max_depth=5, max_features='sqrt',
+                          min_samples_leaf=5, min_samples_split=8,
+                          n_estimators=700) - przewidywanie - start
+[2020-12-26 21:20:57.828562] ML - GradientBoostingRegressor(learning_rate=0.014, max_depth=5, max_features='sqrt',
+                          min_samples_leaf=5, min_samples_split=8,
+                          n_estimators=700) - przewidywanie - koniec 0:00:00.244112
+[2020-12-26 21:21:24.444010] GEN - odczyt trajektorii - start [data/part2/modelA/generated/task1.txt]
+[2020-12-26 21:21:28.920547] GEN - odczyt trajektorii - koniec 0:00:04.475482
+[2020-12-26 21:21:29.047693] TAMSD - estymacja - start
+[2020-12-26 21:21:47.939129] TAMSD - estymacja - koniec 0:00:18.891236
+[2020-12-26 21:22:06.513702] ML - LinearRegression(n_jobs=-1, normalize=True) - przewidywanie - start
+[2020-12-26 21:22:06.518893] ML - LinearRegression(n_jobs=-1, normalize=True) - przewidywanie - koniec 0:00:00.004273
+[2020-12-26 21:22:21.687439] ML - DecisionTreeRegressor(max_depth=7, max_features='auto', min_samples_leaf=4,
+                      min_samples_split=9) - przewidywanie - start
+[2020-12-26 21:22:21.696696] ML - DecisionTreeRegressor(max_depth=7, max_features='auto', min_samples_leaf=4,
+                      min_samples_split=9) - przewidywanie - koniec 0:00:00.007980
+[2020-12-26 21:22:38.945474] ML - RandomForestRegressor(max_depth=14, max_features='sqrt',
+                      max_samples=0.6000000000000001, min_samples_leaf=3,
+                      min_samples_split=3, n_estimators=500) - przewidywanie - start
+[2020-12-26 21:22:40.156403] ML - RandomForestRegressor(max_depth=14, max_features='sqrt',
+                      max_samples=0.6000000000000001, min_samples_leaf=3,
+                      min_samples_split=3, n_estimators=500) - przewidywanie - koniec 0:00:01.207944
+[2020-12-26 21:22:55.667397] ML - GradientBoostingRegressor(learning_rate=0.014, max_depth=5, max_features='sqrt',
+                          min_samples_leaf=5, min_samples_split=8,
+                          n_estimators=700) - przewidywanie - start
+[2020-12-26 21:22:55.915405] ML - GradientBoostingRegressor(learning_rate=0.014, max_depth=5, max_features='sqrt',
+                          min_samples_leaf=5, min_samples_split=8,
+                          n_estimators=700) - przewidywanie - koniec 0:00:00.247013
+[2020-12-26 21:23:18.763661] GEN - odczyt trajektorii - start [data/part2/modelB/generated/task1.txt]
+[2020-12-26 21:23:19.383135] GEN - odczyt trajektorii - koniec 0:00:00.619090
+[2020-12-26 21:23:19.495556] TAMSD - estymacja - start
+[2020-12-26 21:23:23.816043] TAMSD - estymacja - koniec 0:00:04.320138
+[2020-12-26 21:23:38.284529] ML - LinearRegression(n_jobs=-1, normalize=True) - przewidywanie - start
+[2020-12-26 21:23:38.299678] ML - LinearRegression(n_jobs=-1, normalize=True) - przewidywanie - koniec 0:00:00.013523
+[2020-12-26 21:23:52.600931] ML - DecisionTreeRegressor(max_depth=7, max_features='auto', min_samples_leaf=4,
+                      min_samples_split=9) - przewidywanie - start
+[2020-12-26 21:23:52.607890] ML - DecisionTreeRegressor(max_depth=7, max_features='auto', min_samples_leaf=4,
+                      min_samples_split=9) - przewidywanie - koniec 0:00:00.005422
+[2020-12-26 21:24:06.057173] ML - RandomForestRegressor(max_depth=14, max_features='sqrt',
+                      max_samples=0.6000000000000001, min_samples_leaf=3,
+                      min_samples_split=3, n_estimators=500) - przewidywanie - start
+[2020-12-26 21:24:07.198901] ML - RandomForestRegressor(max_depth=14, max_features='sqrt',
+                      max_samples=0.6000000000000001, min_samples_leaf=3,
+                      min_samples_split=3, n_estimators=500) - przewidywanie - koniec 0:00:01.140915
+[2020-12-26 21:24:20.889212] ML - GradientBoostingRegressor(learning_rate=0.014, max_depth=5, max_features='sqrt',
+                          min_samples_leaf=5, min_samples_split=8,
+                          n_estimators=700) - przewidywanie - start
+[2020-12-26 21:24:21.164855] ML - GradientBoostingRegressor(learning_rate=0.014, max_depth=5, max_features='sqrt',
+                          min_samples_leaf=5, min_samples_split=8,
+                          n_estimators=700) - przewidywanie - koniec 0:00:00.273814
+[2020-12-26 21:24:43.166362] GEN - odczyt trajektorii - start [data/part2/modelC/generated/task1.txt]
+[2020-12-26 21:24:44.600086] GEN - odczyt trajektorii - koniec 0:00:01.433536
+[2020-12-26 21:24:44.690773] TAMSD - estymacja - start
+[2020-12-26 21:24:57.376105] TAMSD - estymacja - koniec 0:00:12.685096
+[2020-12-26 21:25:14.292059] ML - LinearRegression(n_jobs=-1, normalize=True) - przewidywanie - start
+[2020-12-26 21:25:14.302703] ML - LinearRegression(n_jobs=-1, normalize=True) - przewidywanie - koniec 0:00:00.009964
+[2020-12-26 21:25:29.979759] ML - DecisionTreeRegressor(max_depth=7, max_features='auto', min_samples_leaf=4,
+                      min_samples_split=9) - przewidywanie - start
+[2020-12-26 21:25:29.985875] ML - DecisionTreeRegressor(max_depth=7, max_features='auto', min_samples_leaf=4,
+                      min_samples_split=9) - przewidywanie - koniec 0:00:00.004798
+[2020-12-26 21:25:44.818454] ML - RandomForestRegressor(max_depth=14, max_features='sqrt',
+                      max_samples=0.6000000000000001, min_samples_leaf=3,
+                      min_samples_split=3, n_estimators=500) - przewidywanie - start
+[2020-12-26 21:25:46.133204] ML - RandomForestRegressor(max_depth=14, max_features='sqrt',
+                      max_samples=0.6000000000000001, min_samples_leaf=3,
+                      min_samples_split=3, n_estimators=500) - przewidywanie - koniec 0:00:01.313887
+[2020-12-26 21:26:01.886276] ML - GradientBoostingRegressor(learning_rate=0.014, max_depth=5, max_features='sqrt',
+                          min_samples_leaf=5, min_samples_split=8,
+                          n_estimators=700) - przewidywanie - start
+[2020-12-26 21:26:02.126660] ML - GradientBoostingRegressor(learning_rate=0.014, max_depth=5, max_features='sqrt',
+                          min_samples_leaf=5, min_samples_split=8,
+                          n_estimators=700) - przewidywanie - koniec 0:00:00.239274

@@ -7,7 +7,7 @@ def logg(text):
         
         
         
-# part1
+# part1&2
 N_long = 110000
 number_to_learn = 100000
 # number_to_learn = 1000

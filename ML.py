@@ -42,7 +42,7 @@ def load_model(path):
     return model
 
 def linear_regression(features, part, Model):
-    train_data, train_labels, test_data, test_label = split_data(features, number_to_learn, part)
+    train_data, train_labels, test_data, test_label = split_data(features, number_to_learn)
     print('Wyznaczanie modelu wilowymiarowej regresji liniowej...')
     log(f'ML - regresja liniowa - nauczanie - start')
     start = datetime.now()
@@ -51,7 +51,7 @@ def linear_regression(features, part, Model):
     stop = datetime.now()
     log(f'ML - regresja liniowa - nauczanie - koniec {stop - start}')
     print(' --- ZAKOŃCZONO')
-    path = f'data/part1/model{Model}/ML/linear_regression/model.pk1'
+    path = f'data/part{part}/model{Model}/ML/linear_regression/model.pk1'
     print('Zapisywanie modelu do pliku {}'.format(path))
     save_model(model, path)
     print(' --- ZAKOŃCZONO')
@@ -66,11 +66,11 @@ def linear_regression(features, part, Model):
     results = pd.DataFrame({'expo': test_label, 'expo_est': predicted_labels})
     print(' --- ZAKOŃCZONO')
     print('Translacja wyników do pliku...')
-    results.to_csv(f'data/part1/model{Model}/ML/linear_regression/estimated.csv')
+    results.to_csv(f'data/part{part}/model{Model}/ML/linear_regression/estimated.csv')
     print(' --- ZAKOŃCZONO')
 
 def decision_tree(features, part, Model):
-    train_data, train_labels, test_data, test_label = split_data(features, number_to_learn, part)
+    train_data, train_labels, test_data, test_label = split_data(features, number_to_learn)
     hiperparam_data = train_data[:floor(number_to_learn/10)]
     hiperparam_labels = train_labels[:floor(number_to_learn/10)]
     print('Wyznaczanie drzewa decyzyjnego...')
@@ -98,8 +98,8 @@ def decision_tree(features, part, Model):
     stop = datetime.now()
     log(f'ML - drzewo decyzyjne - szukanie superparametrów - koniec {stop - start}')
     model_params = pd.DataFrame(model.best_params_, index = ['decision tree'])
-    dirmake(f'data/part1/model{Model}/ML/decision_tree')
-    model_params.to_csv(f'data/part1/model{Model}/ML/decision_tree/model_params.csv')
+    dirmake(f'data/part{part}/model{Model}/ML/decision_tree')
+    model_params.to_csv(f'data/part{part}/model{Model}/ML/decision_tree/model_params.csv')
     model = DecisionTreeRegressor(**model.best_params_)
     log(f'ML - drzewo decyzyjne - nauczanie - start')
     start = datetime.now()
@@ -107,18 +107,18 @@ def decision_tree(features, part, Model):
     stop = datetime.now()
     log(f'ML - drzewo decyzyjne - nauczanie - koniec {stop - start}')
     print(' --- ZAKOŃCZONO')
-    path = f'data/part1/model{Model}/ML/decision_tree/model.pk1'
+    path = f'data/part{part}/model{Model}/ML/decision_tree/model.pk1'
     print('Zapisywanie modelu do pliku {}'.format(path))
     save_model(model, path)
     plt.cla()
     plt.figure(figsize=(10,6.5))
     plot_tree(model, max_depth = 3, feature_names = list(test_data), fontsize=10, filled=True)
-    path = f'data/part1/model{Model}/ML/decision_tree/tree.pdf'
+    path = f'data/part{part}/model{Model}/ML/decision_tree/tree.pdf'
     plt.savefig(path, transparent = True, bbox_inches = 'tight')
     plt.cla()
     plt.figure(figsize=(15,15))
     plot_tree(model, feature_names = list(test_data), filled=True)
-    path = f'data/part1/model{Model}/ML/decision_tree/full_tree.pdf'
+    path = f'data/part{part}/model{Model}/ML/decision_tree/full_tree.pdf'
     plt.savefig(path, transparent = True, bbox_inches = 'tight')
     print(' --- ZAKOŃCZONO')
     print('Testowanie modelu drzewa decyzyjnego...')
@@ -132,11 +132,11 @@ def decision_tree(features, part, Model):
     results = pd.DataFrame({'expo': test_label, 'expo_est': predicted_labels})
     print(' --- ZAKOŃCZONO')
     print('Translacja wyników do pliku...')
-    results.to_csv(f'data/part1/model{Model}/ML/decision_tree/estimated.csv')
+    results.to_csv(f'data/part{part}/model{Model}/ML/decision_tree/estimated.csv')
     print(' --- ZAKOŃCZONO')
 
 def random_forest(features, part, Model):
-    train_data, train_labels, test_data, test_label = split_data(features, number_to_learn, part)
+    train_data, train_labels, test_data, test_label = split_data(features, number_to_learn)
     hiperparam_data = train_data[:floor(number_to_learn/10)]
     hiperparam_labels = train_labels[:floor(number_to_learn/10)]
     print('Wyznaczanie modelu random forest...')
@@ -169,8 +169,8 @@ def random_forest(features, part, Model):
     stop = datetime.now()
     log(f'ML - las losowy - szukanie superparametrów - koniec {stop - start}')
     model_params = pd.DataFrame(model.best_params_, index = ['random forest'])
-    dirmake(f'data/part1/model{Model}/ML/random_forest')
-    model_params.to_csv(f'data/part1/model{Model}/ML/random_forest/model_params.csv')
+    dirmake(f'data/part{part}/model{Model}/ML/random_forest')
+    model_params.to_csv(f'data/part{part}/model{Model}/ML/random_forest/model_params.csv')
     log(f'ML - las losowy - nauczanie - start')
     start = datetime.now()
     model = RandomForestRegressor(**model.best_params_)
@@ -178,7 +178,7 @@ def random_forest(features, part, Model):
     stop = datetime.now()
     log(f'ML - las losowy - nauczanie - koniec {stop - start}')
     print(' --- ZAKOŃCZONO')
-    path = f'data/part1/model{Model}/ML/random_forest/model.pk1'
+    path = f'data/part{part}/model{Model}/ML/random_forest/model.pk1'
     print('Zapisywanie modelu do pliku {} oraz jego parametrów'.format(path))
     save_model(model, path)
     print(' --- ZAKOŃCZONO')
@@ -193,16 +193,16 @@ def random_forest(features, part, Model):
     results = pd.DataFrame({'expo': test_label, 'expo_est': predicted_labels})
     print(' --- ZAKOŃCZONO')
     print('Zapisywanie wyników do pliku...')
-    results.to_csv(f'data/part1/model{Model}/ML/random_forest/estimated.csv')
+    results.to_csv(f'data/part{part}/model{Model}/ML/random_forest/estimated.csv')
     print(' --- ZAKOŃCZONO')
 
 def gradient_boosting(features, part, Model):
-    train_data, train_labels, test_data, test_label = split_data(features, number_to_learn, part)
+    train_data, train_labels, test_data, test_label = split_data(features, number_to_learn)
     hiperparam_data = train_data[:floor(number_to_learn/10)]
     hiperparam_labels = train_labels[:floor(number_to_learn/10)]
     print('Wyznaczanie modelu gradient boosting...')
     # https://towardsdatascience.com/hyperparameter-tuning-the-random-forest-in-python-using-scikit-learn-28d2aa77dd74
-    learning_rate = [2**-4 * i for i in range(1, 15)]
+    learning_rate = [0.001 * i for i in range(1, 21)]
     n_estimators = list(range(100,1001,100))
     max_depth = list(range(2,20,1))
     min_samples_split = list(range(2,11))
@@ -230,10 +230,10 @@ def gradient_boosting(features, part, Model):
     stop = datetime.now()
     log(f'ML - wzmocenienie gradientowe - szukanie superparametrów - koniec {stop - start}')
     model_params = pd.DataFrame(model.best_params_, index = ['gradient boosting'])
-    dirmake(f'data/part1/model{Model}/ML/gradient_boosting')
-    model_params.to_csv(f'data/part1/model{Model}/ML/gradient_boosting/model_params.csv')
+    dirmake(f'data/part{part}/model{Model}/ML/gradient_boosting')
+    model_params.to_csv(f'data/part{part}/model{Model}/ML/gradient_boosting/model_params.csv')
     model = GradientBoostingRegressor(**model.best_params_)
-    # params = pd.read_csv(f'data/part1/model{Model}/ML/gradient_boosting/model_params.csv', index_col='Unnamed: 0')
+    # params = pd.read_csv(f'data/part{part}/model{Model}/ML/gradient_boosting/model_params.csv', index_col='Unnamed: 0')
     # params = params.to_dict(orient = 'list')
     # for key,value in params.items():
     #     params[key] = value[0]
@@ -244,7 +244,7 @@ def gradient_boosting(features, part, Model):
     stop = datetime.now()
     log(f'ML - wzmocenienie gradientowe - nauczanie - koniec {stop - start}')
     print(' --- ZAKOŃCZONO')
-    path = f'data/part1/model{Model}/ML/gradient_boosting/model.pk1'
+    path = f'data/part{part}/model{Model}/ML/gradient_boosting/model.pk1'
     print('Zapisywanie modelu do pliku {} oraz jego parametrów'.format(path))
     save_model(model, path)
     print(' --- ZAKOŃCZONO')
@@ -259,5 +259,5 @@ def gradient_boosting(features, part, Model):
     results = pd.DataFrame({'expo': test_label, 'expo_est': predicted_labels})
     print(' --- ZAKOŃCZONO')
     print('Zapisywanie wyników do pliku...')
-    results.to_csv(f'data/part1/model{Model}/ML/gradient_boosting/estimated.csv')
+    results.to_csv(f'data/part{part}/model{Model}/ML/gradient_boosting/estimated.csv')
     print(' --- ZAKOŃCZONO')

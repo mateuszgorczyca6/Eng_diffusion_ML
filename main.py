@@ -27,7 +27,7 @@ if part == 0:
     if Q_TAMSD == 'Y':
         example_TAMSD()
     
-if part == 1:
+if part == 1 or part == 2:
     Model = input('Jaki model chcesz uruchomić? (A/B/C): ')
     
     logg(f'Wybrany model: {Model}.')

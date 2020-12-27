@@ -22,7 +22,7 @@ def estimate_expo(t, tamsds, D, T):
   return (s_log_t_x_log_rho - log(4 * D) * s_log_t) / s_log_t_2
 
 def TAMSD_estimation_traj(part, traj_num, give):
-  if part in [0,1]:
+  if part in [0,1,2]:
     exps, traj = give
     x, y = traj
     T = len(x)
@@ -40,7 +40,7 @@ def TAMSD_estimation(trajectories, exps, part, Model):
   if part == 0:
     D, real_exp, est_exp, tamsds = TAMSD_estimation_traj(0, 1, [exps, trajectories])
     return D, real_exp, est_exp, tamsds
-  if part == 1:
+  if part == 1 or part == 2:
     print('Obliczanie estymacji TAMSDS...')
     trajectories = trajectories[:-number_to_learn]
     liczydlo = 0
@@ -69,7 +69,7 @@ def TAMSD_estimation(trajectories, exps, part, Model):
     stop = datetime.now()
     logg(f'TAMSD - estymacja - koniec {stop - start}')
     print(' --- ZAKOŃCZONO')
-    path = f'data/part1/model{Model}/TAMSD/'
+    path = f'data/part{part}/model{Model}/TAMSD/'
     dirmake(path)
     fname = path + str('estimated.csv')
     print(f'Zapisywanie wyników do pliku {fname}')

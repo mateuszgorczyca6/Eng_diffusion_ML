@@ -85,9 +85,7 @@ def test_model(predicted_values, real_values, model_name, path, mode):
                             index = [model_name])
 
     if 'full' in mode or 'plot' in mode:
-        plt.cla()
-        sns.set(rc={'figure.figsize':(2,2)})
-        plt.figure(figsize = (2,2))
+        plt.clf()
         sns.displot({'r': real_values, 'e': predicted_values}, x = 'r', y = 'e')
         plt.plot([0,2], [0,2], color = 'black')
         plt.title(model_name, loc='left')
@@ -97,8 +95,7 @@ def test_model(predicted_values, real_values, model_name, path, mode):
         plt.ylim(0,2)
         plt.savefig(path+model_name+'.pdf', transparent = True, bbox_inches = 'tight', dpi = 300)
         # contours
-        plt.cla()
-        plt.figure(figsize = (2,2))
+        plt.clf()
         sns.displot({'r': real_values, 'e': predicted_values}, x = 'r', y = 'e', kind="kde", cmap=sns.light_palette("red", as_cmap=True))
         plt.plot([0,2], [0,2], color = 'black')
         plt.title(model_name, loc='left')
@@ -113,7 +110,7 @@ def test_model(predicted_values, real_values, model_name, path, mode):
 def test_models(part, Model, num_of_learning = 100000, tests = None, mode = 'full'):
     if tests == None:
         tests = Model
-    if part == 1:
+    if part == 1 or part == 2:
         path_results = f'data/part{part}/results/model{Model}/test{tests}/'
         path_estimate = f'data/part{part}/estimations/model{Model}/test{Model_test}/'
         dataset = read_ML_features(part, tests)
@@ -133,6 +130,8 @@ def test_models(part, Model, num_of_learning = 100000, tests = None, mode = 'ful
         ttable = pd.DataFrame(columns = ['R^2', 'eps = 0.05', 'eps = 0.025', 'max_error'])
         err = {}
         
+        plt.figure(figsize = (2,2))
+        
         for model in models:
             # # # estymowanie parametrów
             if model == 'TAMSD':
@@ -144,6 +143,7 @@ def test_models(part, Model, num_of_learning = 100000, tests = None, mode = 'ful
             if 'full' in mode or 'table' in mode:
                 ttable = pd.concat([ttable, table])
             err[model] = er
+            print(f'Zrobione {Model} - {tests} - {model}')
             # # # rysowanki
             
         if 'full' in mode or 'table' in mode:
@@ -154,42 +154,40 @@ def test_models(part, Model, num_of_learning = 100000, tests = None, mode = 'ful
             
         if 'full' in mode or 'plot' in mode:
             # box plot
-            plt.cla()
+            plt.clf()
             plt.figure(figsize = (5,5))
             box = plt.boxplot(labels = err.keys(), x = err.values(), patch_artist=True, notch = True, vert = True)
             colors = ['lightblue', 'orange', 'lightgreen', 'pink', 'violet']
             for plott, color in zip(box['boxes'], colors):
+                print(plott)
                 plott.set_facecolor(color)
             plt.savefig(path_results+'boxplots.pdf', transparent = True, bbox_inches = 'tight', dpi = 300)
             
             # displots
-            plt.cla()
-            plt.figure(figsize = (5,5))
+            plt.clf()
             sns.displot(err, common_norm=False, stat="density")
             plt.plot([0,0], [0,1.3], color = 'black')
             plt.savefig(path_results+'displot1.pdf', transparent = True, bbox_inches = 'tight', dpi = 300)
 
-            plt.cla()
-            plt.figure(figsize = (5,5))
+            plt.clf()
             sns.displot(err, kind = "kde", common_norm=False, bw_adjust = 0.7, fill=True)
             plt.plot([0,0], [0,1.3], color = 'black')
             plt.savefig(path_results+'displot2.pdf', transparent = True, bbox_inches = 'tight', dpi = 300)
             
-            plt.cla()
-            plt.figure(figsize = (5,5))
+            plt.clf()
             sns.displot(err, kind = "kde", common_norm=False, bw_adjust=2)
             plt.plot([0,0], [0,1.3], color = 'black')
             plt.savefig(path_results+'displot3.pdf', transparent = True, bbox_inches = 'tight', dpi = 300)
 
-            plt.cla()
-            plt.figure(figsize = (5,5))
+            plt.clf()
             sns.displot(err, kind = "ecdf")
             plt.plot([0,0], [0,1.3], color = 'black')
             plt.savefig(path_results+'displot4.pdf', transparent = True, bbox_inches = 'tight', dpi = 300)
             
         print(f'Zrobione wykresy dla {Model}-{tests}')
 
-for Model in ['B']:
+part = 2
+for Model in ['A', 'B', 'C']:
     for Model_test in ['A', 'B', 'C']:
         print(f'Praca nad {Model} - {Model_test}')
-        test_models(1, Model, 100000, Model_test)
+        test_models(part, Model, 100000, Model_test)

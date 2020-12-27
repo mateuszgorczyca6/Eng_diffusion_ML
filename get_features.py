@@ -128,7 +128,7 @@ def get_info(s_n, traj_num, give):
     return ex, D, E, ss, kappa1, kappa5, G1, G5, S, R1, R5, max_dist, Trap, frac_dim
 
 def get_features(trajectories, exps, part, Model):
-    if part == 1:
+    if part == 1 or part == 2:
         print('Wyciąganie parametrów z trajektorji...')
         global l_t
         ### odczyt danych z trajektorii
@@ -170,9 +170,9 @@ def get_features(trajectories, exps, part, Model):
         stop = datetime.now()
         logg(f'ML - wyciąganie danych - koniec {stop - start}')
         # zapis do pliku
-        path = f'data/part1/model{Model}/ML'
+        path = f'data/part{part}/model{Model}/ML'
         dirmake(path)
-        fname = f'data/part1/model{Model}/ML/features.csv'
+        fname = f'data/part{part}/model{Model}/ML/features.csv'
         print(f'Zapisywanie danych do pliku {fname}')
         traj_info.to_csv(fname)
         print(' --- ZAKOŃCZONO')

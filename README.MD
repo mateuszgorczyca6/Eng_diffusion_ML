@@ -148,3 +148,13 @@ Jupyter notebook:
     <li> Added some testing options
     <li> Changed TAMSD estimation
 </ul>
+
+<b>v0.2.0</b>
+
+<ul>
+    <li> Added second part of everything (only fractal Brownian motion)
+    <li> Added modified andi_dataset function
+    <li> Changed cla() to close() for plots in test module
+    <li> Saved logs in separated folders for every part
+    <li> Changed learning rates for gradient boosting
+</ul>
