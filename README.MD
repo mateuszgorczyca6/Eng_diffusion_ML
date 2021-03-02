@@ -1,4 +1,24 @@
-# Wersje
+# Determination of the anomalous exponent via machine learning methods
+## Info
+Programs that were used while writing my Engineering Thesis.
+
+Checked alghoritms are:
+<ul>
+    <li> multivariable linear regression </li>
+    <li> decision tree </li>
+    <li> random forest </li>
+    <li> gradient boosting </li>
+</ul>
+
+## Usage
+To generate trajectories, get features from them and learn models use ,,main.py'' file.
+As part can be choosen numbers from 1 to 10. Each generates different data:
+<ol>
+    <li> 
+</ol>
+
+
+## Changelog
 
 <b>v0.0.1</b>
 
