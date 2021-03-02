@@ -5,8 +5,8 @@ The main task is to check some feature-based machine learning alghorithms are be
 
 Features extracted from trejectories are:
 <ul>
-    <li> współczynnik dyfuzji $D$, wydajność $E$, współczynnik spowolnienia $s$, iloraz MSD $\kappa$, współczynnik anty-gaussowości $G$, liniowość $S$, autokorelacja $R$, </li>
-    <li> maksymalna odległość między punktami $d_\max$, prawdopodobieństwo uwięzienia $P$, wymiar fraktalny $D_f$. </li>
+    <li> diffusion coefficient, efficiency, slowness ration, MSD coefficient, anti-gaussinity coefficient, linearity, autocorrelation, </li>
+    <li> maximal distance between two positions, closure probability, fractal dimension. </li>
 </ul>
 
 Checked alghoritms are:
