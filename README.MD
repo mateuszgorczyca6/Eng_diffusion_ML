@@ -2,6 +2,14 @@
 ## Info
 Programs that were used while writing my Engineering Thesis.
 
+The main task is to check some feature-based machine learning alghorithms are better than TAMSD (classic method) in estimation of anomalous diffusion coefficient.
+
+Features extracted from trejectories are:
+<ul>
+    <li> współczynnik dyfuzji $D$, wydajność $E$, współczynnik spowolnienia $s$, iloraz MSD $\kappa$, współczynnik anty-gaussowości $G$, liniowość $S$, autokorelacja $R$, </li>
+    <li> maksymalna odległość między punktami $d_\max$, prawdopodobieństwo uwięzienia $P$, wymiar fraktalny $D_f$. </li>
+</ul>
+
 Checked alghoritms are:
 <ul>
     <li> multivariable linear regression </li>
@@ -10,13 +18,30 @@ Checked alghoritms are:
     <li> gradient boosting </li>
 </ul>
 
+Data is generated using AnDi-dataset [https://github.com/AnDiChallenge/ANDI_datasets].
+
+For more info check ,,Praca inżynierska.pdf''.
+
 ## Usage
-To generate trajectories, get features from them and learn models use ,,main.py'' file.
+<b>To generate trajectories, get features from them and learn models</b> run ,,main.py'' file.
 As part can be choosen numbers from 1 to 10. Each generates different data:
 <ol>
-    <li> 
+    <li> 110000 trajectories with random noise from Brownian Motion only. </li>
+    <li> 110000 trajectories with random noise from all awailable motions. </li>
+    <li> 110000 trajectories with noise ration equal 0 from all awailable motions. </li>
+    <li> 110000 trajectories with noise ration equal 0.1 from all awailable motions. </li>
+    <li> 110000 trajectories with noise ration equal 0.3 from all awailable motions. </li>
+    <li> 110000 trajectories with noise ration equal 1 from all awailable motions. </li>
+    <li> 110000 trajectories with random noise from all awailable motions. </li>
+    <li> 11 trajectories with random noise from all awailable motions. </li>
+    <li> 110 trajectories with random noise from all awailable motions. </li>
+    <li> 1100 trajectories with random noise from all awailable motions. </li>
+    <li> 11000 trajectories with random noise from all awailable motions. </li>
 </ol>
 
+Then answear to program a questions that it will ask.
+
+<b>To test models, get prediction values and get prediction quality</b> use ,,test.py'' file, but it's draft version, so you need to uncomment certain parts and sometimes change code to get what you want.
 
 ## Changelog
 
