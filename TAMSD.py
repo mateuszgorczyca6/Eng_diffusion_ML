@@ -22,27 +22,29 @@ def estimate_expo(t, tamsds, D, T):
   return (s_log_t_x_log_rho - log(4 * D) * s_log_t) / s_log_t_2
 
 def TAMSD_estimation_traj(part, traj_num, give):
-  if part in [0,1,2]:
-    exps, traj = give
-    x, y = traj
-    T = len(x)
-    real_exp = exps
-    r = norm(x, y, T)
-    tamsds = TAMSD(x, y, T)
-    D = diffusivity(tamsds[1])
-    t = range(1, T+1)
-    est_exp = estimate_expo(t, tamsds, D, T)
-    result = D, real_exp, est_exp, tamsds
-    return result
+  exps, traj = give
+  x, y = traj
+  T = len(x)
+  real_exp = exps
+  r = norm(x, y, T)
+  tamsds = TAMSD(x, y, T)
+  D = diffusivity(tamsds[1])
+  t = range(1, T+1)
+  est_exp = estimate_expo(t, tamsds, D, T)
+  result = D, real_exp, est_exp, tamsds
+  return result
 
 def TAMSD_estimation(trajectories, exps, part, Model):
   global liczydlo
   if part == 0:
     D, real_exp, est_exp, tamsds = TAMSD_estimation_traj(0, 1, [exps, trajectories])
     return D, real_exp, est_exp, tamsds
-  if part == 1 or part == 2:
+  if part >= 1:
     print('Obliczanie estymacji TAMSDS...')
-    trajectories = trajectories[:-number_to_learn]
+    if part in [1,2,3,4,5,6]:
+      trajectories = trajectories[:-number_to_learn]
+    else:
+      trajectories = trajectories[:-floor(10 ** (part - 6))]
     liczydlo = 0
     traj_num = len(trajectories)
     traj_info = pd.DataFrame(columns = ['D', 'expo', 'expo_est', 'tamsds'],

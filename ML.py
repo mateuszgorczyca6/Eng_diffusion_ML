@@ -42,7 +42,10 @@ def load_model(path):
     return model
 
 def linear_regression(features, part, Model):
-    train_data, train_labels, test_data, test_label = split_data(features, number_to_learn)
+    if part in [0,1,2,3,4,5,6]:
+        train_data, train_labels, test_data, test_label = split_data(features, number_to_learn)
+    else:
+        train_data, train_labels, test_data, test_label = split_data(features, floor(10 ** (part - 6)))
     print('Wyznaczanie modelu wilowymiarowej regresji liniowej...')
     log(f'ML - regresja liniowa - nauczanie - start')
     start = datetime.now()
@@ -70,7 +73,10 @@ def linear_regression(features, part, Model):
     print(' --- ZAKOŃCZONO')
 
 def decision_tree(features, part, Model):
-    train_data, train_labels, test_data, test_label = split_data(features, number_to_learn)
+    if part in [0,1,2,3,4,5,6]:
+        train_data, train_labels, test_data, test_label = split_data(features, number_to_learn)
+    else:
+        train_data, train_labels, test_data, test_label = split_data(features, floor(10 ** (part - 6)))
     hiperparam_data = train_data[:floor(number_to_learn/10)]
     hiperparam_labels = train_labels[:floor(number_to_learn/10)]
     print('Wyznaczanie drzewa decyzyjnego...')
@@ -136,7 +142,10 @@ def decision_tree(features, part, Model):
     print(' --- ZAKOŃCZONO')
 
 def random_forest(features, part, Model):
-    train_data, train_labels, test_data, test_label = split_data(features, number_to_learn)
+    if part in [0,1,2,3,4,5,6]:
+        train_data, train_labels, test_data, test_label = split_data(features, number_to_learn)
+    else:
+        train_data, train_labels, test_data, test_label = split_data(features, floor(10 ** (part - 6)))
     hiperparam_data = train_data[:floor(number_to_learn/10)]
     hiperparam_labels = train_labels[:floor(number_to_learn/10)]
     print('Wyznaczanie modelu random forest...')
@@ -197,7 +206,10 @@ def random_forest(features, part, Model):
     print(' --- ZAKOŃCZONO')
 
 def gradient_boosting(features, part, Model):
-    train_data, train_labels, test_data, test_label = split_data(features, number_to_learn)
+    if part in [0,1,2,3,4,5,6]:
+        train_data, train_labels, test_data, test_label = split_data(features, number_to_learn)
+    else:
+        train_data, train_labels, test_data, test_label = split_data(features, floor(10 ** (part - 6)))
     hiperparam_data = train_data[:floor(number_to_learn/10)]
     hiperparam_labels = train_labels[:floor(number_to_learn/10)]
     print('Wyznaczanie modelu gradient boosting...')

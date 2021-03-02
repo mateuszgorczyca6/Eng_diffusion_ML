@@ -27,7 +27,7 @@ if part == 0:
     if Q_TAMSD == 'Y':
         example_TAMSD()
     
-if part == 1 or part == 2:
+ if part in [1,2,3,4,5,6,7,8,9,10]:
     Model = input('Jaki model chcesz uruchomić? (A/B/C): ')
     
     logg(f'Wybrany model: {Model}.')
@@ -41,7 +41,7 @@ if part == 1 or part == 2:
     Q_ML_dectree = input("Czy chcesz użyć decision tree? (Y/n): ")
     Q_ML_randomforest = input("Czy chcesz użyć random forest? (Y/n): ")
     Q_ML_gradientboosting = input("Czy chcesz użyć gradient boosting? (Y/n): ")
-    
+
     logg(f'Wybrane decyzje: {Q_generate}, {Q_generate_plot}, {Q_TAMSD}, {Q_TAMSD_plot}'+
         f', {Q_ML_features}, {Q_ML_linreg}, {Q_ML_dectree}, {Q_ML_randomforest}, {Q_ML_gradientboosting}.')
     print(64 * '-')

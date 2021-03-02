@@ -128,7 +128,7 @@ def get_info(s_n, traj_num, give):
     return ex, D, E, ss, kappa1, kappa5, G1, G5, S, R1, R5, max_dist, Trap, frac_dim
 
 def get_features(trajectories, exps, part, Model):
-    if part == 1 or part == 2:
+    if part >= 1:
         print('Wyciąganie parametrów z trajektorji...')
         global l_t
         ### odczyt danych z trajektorii

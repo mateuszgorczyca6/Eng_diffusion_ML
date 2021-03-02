@@ -2,7 +2,7 @@ import andi
 import matplotlib.pyplot as plt
 from generating_data import dirmake
 from global_params import colors, logg, color_maps
-from TAMSD import TAMSD_estimation
+from TAMSD import TAMSD_estimation, estimate_expo
 
 def example_trajs():
     print('Generowanie i zapisywanie przykładowych trajektorii...')
@@ -38,12 +38,14 @@ def example_TAMSD():
     logg('Generowanie przykładowych TAMSD - start')
     
     AD = andi.andi_datasets()
-    dataset = AD.create_dataset(100, 1,[0.7],[2], 2)
-    x = dataset[0][2:102]
-    y = dataset[0][102:]
+    dataset = AD.create_dataset(200, 1,[0.7],[2], 2)
+    x = dataset[0][2:202]
+    y = dataset[0][202:]
     trajectory = [x, y]
-    D, expo, expo_est, tamsds = TAMSD_estimation(trajectory, 0.7, 0)
-    t = range(len(tamsds))
+    D, expo, expo_est, tamsds = TAMSD_estimation(trajectory, 0.7, 0, 'A')
+    tamsds = tamsds[:100]
+    t = range(1, len(tamsds)+1)
+    expo_est = estimate_expo(t, tamsds, D, 100)
     
     plt.cla()
     plt.figure(figsize=(3,3))

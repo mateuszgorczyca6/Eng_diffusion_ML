@@ -5,7 +5,7 @@ import pandas as pd
 from global_params import logg as log
 from datetime import datetime
 from math import floor
-from stolen_from_andi import andi_dataset_2
+from stolen_from_andi import andi_dataset_2, andi_dataset_3
 
 AD = andi.andi_datasets()
 
@@ -51,11 +51,40 @@ def generate_trajectories(N, part, Model):
       andi_dataset_2(N = N, tasks = [1], dimensions = [2], save_dataset = True, min_T = 20, max_T = 100, path_datasets = path, models = models)
     stop = datetime.now()
     log(f'GEN - generowanie trajektorii - koniec [{stop - start}]')
+  
+  if part in [3, 4, 5, 6]:
+    path = f'data/part{part}/model{Model}/generated/'
+    dirmake(path)
+    log(f'GEN - generowanie trajektorii - start [{path}]')
+    start = datetime.now()
+    if Model == 'A':
+      T = 100
+    if Model == 'B':
+      T = 20
+    noise = [0, 0.1, 0.3, 1][part - 3]
+    andi_dataset_3(N = N, tasks = [1], dimensions = [2], save_dataset = True, min_T = T - 1, max_T = T, path_datasets = path, noise = [noise])
+    stop = datetime.now()
+    log(f'GEN - generowanie trajektorii - koniec [{stop - start}]')
+  
+  if part in [7, 8, 9, 10]:
+    path = f'data/part{part}/model{Model}/generated/'
+    dirmake(path)
+    start = datetime.now()
+    log(f'GEN - generowanie trajektorii - start [{path}]')
+    N = floor(1.1 * 10 ** (part - 6))
+    if Model == 'A':
+      AD.andi_dataset(N = N, tasks = 1, dimensions = 2, save_dataset = True, min_T=99, max_T=100, path_datasets=path)
+    if Model == 'B':
+      AD.andi_dataset(N = N, tasks = 1, dimensions = 2, save_dataset = True, min_T=20, max_T=21, path_datasets=path)
+    if Model == 'C':
+      AD.andi_dataset(N = N, tasks = 1, dimensions = 2, save_dataset = True, min_T=20, max_T=100, path_datasets=path)
+    stop = datetime.now()
+    log(f'GEN - generowanie trajektorii - koniec [{stop - start}]')
   print(' --- ZAKOŃCZONO')
     
 def read_trajectories(part, Model, mode = 'all', N = 0):
   print('Ładowanie trajektorii')
-  if part == 1 or part == 2:
+  if part >= 1:
     path = f'data/part{part}/model{Model}/generated/'
     trajectories = []
     log(f'GEN - odczyt trajektorii - start [{path+"task1.txt"}]')
@@ -92,7 +121,7 @@ def read_trajectories(part, Model, mode = 'all', N = 0):
 
 def read_real_expo(part, Model):
   print('Ładowanie prawdziwych wartości exp...')
-  if part == 1 or part == 2:
+  if part >= 1:
     path = f'data/part{part}/model{Model}/generated/'
     exps = []
     with open(path + str('ref1.txt')) as f:
@@ -105,14 +134,14 @@ def read_real_expo(part, Model):
 
 def read_TAMSD(part, Model):
   print('Ładowanie wartości wyestymowanych w TAMSD')
-  if part == 1 or part == 2:
+  if part >= 1:
     traj_info = pd.read_csv(f'data/part{part}/model{Model}/TAMSD/estimated.csv')
   print(' --- ZAKOŃCZONO')
   return traj_info
 
 def read_ML_features(part, Model):
   print('Ładowanie właściwości ruchu dla ML')
-  if part == 1 or part == 2:
+  if part >= 1:
     traj_info = pd.read_csv(f'data/part{part}/model{Model}/ML/features.csv', index_col='Unnamed: 0')
     # overflow delete
     traj_info = traj_info[traj_info < 10**10 ]
